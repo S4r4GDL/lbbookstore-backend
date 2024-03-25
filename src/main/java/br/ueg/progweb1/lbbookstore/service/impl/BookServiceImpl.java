@@ -2,10 +2,12 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 
 import br.ueg.progweb1.lbbookstore.model.Book;
 import br.ueg.progweb1.lbbookstore.service.BookService;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class BookServiceImpl implements BookService {
     @Override
     public Book create(Book newBook) {
