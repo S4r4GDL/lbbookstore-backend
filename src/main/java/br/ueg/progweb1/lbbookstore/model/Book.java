@@ -7,7 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-    @NoArgsConstructor
+import java.time.LocalDate;
+
+@NoArgsConstructor
     @AllArgsConstructor
     @Data
     @Table(name="book")
@@ -42,7 +44,7 @@ import java.math.BigDecimal;
         private Integer quantity;
 
         @Column(name="last_Updade", nullable = false)
-        private Boolean lastUpdate;
+        private LocalDate lastUpdate;
 
         @Column(name="active", nullable = false)
         private Boolean active;

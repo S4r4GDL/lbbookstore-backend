@@ -1,8 +1,11 @@
-package br.ueg.progweb1.lbbookstore.model.dtos;
+package br.ueg.progweb1.lbbookstore.model.dto;
 
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @ToString
 @Builder
@@ -22,6 +25,8 @@ public class CreateBookDTO {
     private BigDecimal price;
 
     private Integer quantity;
+
+    private LocalDate lastUpdate;
 
     private Boolean active;
 }
