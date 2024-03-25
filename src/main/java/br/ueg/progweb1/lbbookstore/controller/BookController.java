@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "${api.version}/student")
+@RequestMapping(path = "${api.version}/book")
 public class BookController {
+
 
 }
