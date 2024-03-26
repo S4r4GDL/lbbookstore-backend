@@ -3,6 +3,8 @@ package br.ueg.progweb1.lbbookstore.controller;
 
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
 import br.ueg.progweb1.lbbookstore.model.dto.BookCreateDTO;
+import br.ueg.progweb1.lbbookstore.model.dto.BookDeleteDTO;
+import br.ueg.progweb1.lbbookstore.model.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,22 @@ public class BookController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping(path = "{id}")
+    @Operation(description = "End point to update a book")
+    public ResponseEntity<Object> updateBook(@PathVariable("id") Long id, @RequestBody BookUpdateDTO bookDTO)
+    {
+        var response = service.update(mapper.toModel(bookDTO), id);
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping
     @Operation(description = "End point to delete a book")
-    public ResponseEntity<Object> deleteBook(@RequestBody BookCreateDTO bookDTO)
+    public ResponseEntity<Object> deleteBook(@RequestBody BookDeleteDTO bookDTO)
     {
-        var response = service.delete(mapper.toModel(bookDTO));
-        return ResponseEntity.ok(response);
+        if(service.delete(bookDTO.id()))
+            return ResponseEntity.ok(bookDTO.toString() + " Delete worked");
+
+        return ResponseEntity.badRequest().build();
     }
 
 
