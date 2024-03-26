@@ -3,7 +3,7 @@ package br.ueg.progweb1.lbbookstore.controller;
 
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
 import br.ueg.progweb1.lbbookstore.model.dto.BookCreateDTO;
-import br.ueg.progweb1.lbbookstore.model.dto.BookDeleteDTO;
+import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
 import br.ueg.progweb1.lbbookstore.model.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,8 +38,9 @@ public class BookController {
 
     @DeleteMapping
     @Operation(description = "End point to delete a book")
-    public ResponseEntity<Object> deleteBook(@RequestBody BookDeleteDTO bookDTO)
+    public ResponseEntity<Object> deleteBook(@RequestBody Long id)
     {
+        BookReadDTO bookDTO = mapper.toDTO(service.getById(id));
         if(service.delete(bookDTO.id()))
             return ResponseEntity.ok(bookDTO.toString() + " Delete worked");
 
