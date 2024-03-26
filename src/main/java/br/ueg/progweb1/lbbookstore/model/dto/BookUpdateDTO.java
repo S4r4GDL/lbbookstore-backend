@@ -1,12 +1,9 @@
 package br.ueg.progweb1.lbbookstore.model.dto;
 
-import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-public record CreateBookDTO(String title,
+public record BookUpdateDTO(String title,
                             String author,
                             String publisher,
                             String edition,

@@ -1,13 +1,13 @@
 package br.ueg.progweb1.lbbookstore.mapper;
 
 import br.ueg.progweb1.lbbookstore.model.Book;
-import br.ueg.progweb1.lbbookstore.model.dto.ReadBookDTO;
-import br.ueg.progweb1.lbbookstore.model.dto.CreateBookDTO;
+import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
+import br.ueg.progweb1.lbbookstore.model.dto.BookCreateDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookMapper {
-    public Book toModel(CreateBookDTO bookCreateDTO){
+    public Book toModel(BookCreateDTO bookCreateDTO){
         Book book = new Book();
         book.setAuthor(bookCreateDTO.author());
         book.setTitle(bookCreateDTO.title());
@@ -17,11 +17,10 @@ public class BookMapper {
         book.setPrice(bookCreateDTO.price());
         book.setQuantity(bookCreateDTO.quantity());
         book.setActive(bookCreateDTO.active());
-        book.setLastUpdate(bookCreateDTO.lastUpdate());
         return book;
     }
-    public ReadBookDTO toDTO(Book book){
-        ReadBookDTO readBookDTO = new ReadBookDTO(
+    public BookReadDTO toDTO(Book book){
+        BookReadDTO bookReadDTO = new BookReadDTO(
                 book.getId(),
                 book.getAuthor(),
                 book.getTitle(),
@@ -32,7 +31,7 @@ public class BookMapper {
                 book.getQuantity(),
                 book.getLastUpdate(),
                 book.getActive());
-        return readBookDTO;
+        return bookReadDTO;
     }
 
 }

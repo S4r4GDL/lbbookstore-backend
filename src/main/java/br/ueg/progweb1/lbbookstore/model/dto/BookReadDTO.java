@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
-public record ReadBookDTO(
+public record BookReadDTO(
         Long id,
         String title,
         String author,
