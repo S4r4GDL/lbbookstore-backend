@@ -1,7 +1,6 @@
 package br.ueg.progweb1.lbbookstore.model.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public record BookUpdateDTO(String title,
                             String author,
@@ -10,6 +9,5 @@ public record BookUpdateDTO(String title,
                             Integer releaseYear,
                             BigDecimal price,
                             Integer quantity,
-                            LocalDate lastUpdate,
                             Boolean active)
 {}
