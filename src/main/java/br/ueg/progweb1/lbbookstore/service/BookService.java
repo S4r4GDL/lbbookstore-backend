@@ -4,12 +4,11 @@ import br.ueg.progweb1.lbbookstore.model.Book;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface BookService {
     Book create(Book newBook);
 
-    Book update(Book book);
+    Book update(Book book, Long id);
 
     List<Book> listAll();
 
@@ -21,7 +20,7 @@ public interface BookService {
 
     List<Book> listLowerPrice(BigDecimal limitPrice);
 
-    Boolean delete(Book model);
+    Boolean delete(Long id);
 
     List<Book> getActiveBooks();
 }
