@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,8 +31,9 @@ public class BookServiceImpl implements BookService {
         newBook.setLastUpdate(LocalDate.now());
     }
 
-    private void prepareToUpdate(Book newBook) {
+    private void prepareToUpdate(Book newBook, Book bookBD) {
         newBook.setLastUpdate(LocalDate.now());
+        newBook.setId(bookBD.getId());
     }
 
     private void validateBusinessLogicToCreate(Book newBook) {
@@ -54,8 +54,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book update(Book book) {
-        return null;
+    public Book update(Book newBook, Long id) {
+        validateMandatoryFields(newBook);
+        validateBusinessLogicToUpdate(newBook);
+        Book bookBD = validateId(id);
+        prepareToUpdate(newBook, bookBD);
+
+        return repository.save(newBook);
+    }
+
+    private void validateBusinessLogicToUpdate(Book book) {
+
     }
 
     @Override
@@ -93,9 +102,18 @@ public class BookServiceImpl implements BookService {
         return null;
     }
 
-    @Override
-    public Boolean delete(Book model) {
-        return true;
+    public Boolean delete(Long id) {
+        Book book = validateId(id);
+        validateBusinessLogicToDelete(book);
+        repository.deleteById(book.getId());
+        return repository.findById(id).isEmpty();
+
+    }
+
+    private void validateBusinessLogicToDelete(Book book) {
+        if(book.getQuantity() > 0)
+            throw new BusinessLogicException(ErrorValidation.INVALID_QUANTITY_TO_DELETE);
+
     }
 
     @Override
