@@ -10,15 +10,17 @@ public interface BookService {
 
     Book update(Book book, Long id);
 
-    List<Book> listAll();
+    List<Book> getAll();
 
     Book getById(Long id);
 
     List<Book> getByAuthor(String author);
 
-    List<Book> getByPublisher();
+    List<Book> getByPublisher(String publisher);
 
-    List<Book> listLowerPrice(BigDecimal limitPrice);
+    List<Book> getByReleaseYear(Integer year);
+
+    List<Book> getByLowerPrice(BigDecimal limitPrice);
 
     Boolean delete(Long id);
 
