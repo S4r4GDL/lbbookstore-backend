@@ -8,7 +8,7 @@ public enum ErrorValidation {
     GENERAL(500L, "Undefined error!"),
     INVALID_ID(400L, "Invalid Id!"),
     NOT_FOUND(404L, "Not found!"),
-    MANDATORY_FIELD_VIOLATION(3L, "Mandatory field not filled!"),
+    MANDATORY_FIELD_VIOLATION(3L, "Mandatory field must be filled up!"),
     INVALID_PRICE(4L, "The price must be higher than 0"),
     INVALID_QUANTITY(5L, "The quantity must be higher or equals to 0"),
     INVALID_QUANTITY_TO_DELETE(6L, "The quantity must be 0 so you can delete");
