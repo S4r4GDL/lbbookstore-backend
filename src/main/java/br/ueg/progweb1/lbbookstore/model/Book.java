@@ -1,20 +1,18 @@
 package br.ueg.progweb1.lbbookstore.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-    @AllArgsConstructor
-    @Data
-    @Table(name="book")
-    @Entity
-    @EqualsAndHashCode(of="id")
+@AllArgsConstructor
+@Data
+@Builder
+@Table(name="book")
+@Entity
+@EqualsAndHashCode(of="id")
     public class Book {
 
         @Id
