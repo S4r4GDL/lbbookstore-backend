@@ -2,6 +2,7 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 
 import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.exception.BusinessLogicException;
+import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.model.Book;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import br.ueg.progweb1.lbbookstore.service.BookService;
@@ -72,7 +73,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> listAll() {
-        return repository.findAll();
+        var bookList = repository.findAll();
+        validateBusinessToGet(bookList);
+        return bookList;
     }
 
     @Override
@@ -92,7 +95,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getByAuthor(String author) {
-        return null;
+        var bookList = repository.findAllByAuthor(author);
+        validateBusinessToGet(bookList);
+        return bookList;
     }
 
     @Override
@@ -121,6 +126,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getActiveBooks() {
-        return repository.findAllByActive(true);
+        var bookList = repository.findAllByActive(true);
+        validateBusinessToGet(bookList);
+        return bookList;
+    }
+
+    @Override
+    public List<Book> getByTitle(String title) {
+        var bookList = repository.findAllByTitle(title);
+        validateBusinessToGet(bookList);
+        return bookList;
+    }
+
+    private void validateBusinessToGet(List<Book> bookList)
+    {
+        if(bookList.isEmpty())
+            throw new ModelDataException(ErrorValidation.NOT_FOUND);
     }
 }
