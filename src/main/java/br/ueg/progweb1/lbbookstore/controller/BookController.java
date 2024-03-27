@@ -10,6 +10,7 @@ import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
 import br.ueg.progweb1.lbbookstore.model.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +53,7 @@ public class BookController {
                             .append(error)
                             .append(businessException.getMessage()));
 
-        }catch (Exception exception)
-        {
+        }catch (Exception exception){
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new StringBuilder()
@@ -65,7 +65,7 @@ public class BookController {
 
     }
 
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/{id}")
     @Operation(description = "End point to update a book")
     public ResponseEntity<Object> updateBook(@PathVariable("id") Long id, @RequestBody BookUpdateDTO bookDTO)
     {
@@ -100,9 +100,9 @@ public class BookController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "/{id}")
     @Operation(description = "End point to delete a book")
-    public ResponseEntity<Object> deleteBook(@RequestParam Long id)
+    public ResponseEntity<Object> deleteBook(@PathVariable("id") Long id)
     {
         String error = "Error while trying to delete a book: ";
 
@@ -125,7 +125,8 @@ public class BookController {
                             .append(error)
                             .append(businessException.getMessage()));
 
-        }catch (Exception exception)
+        }
+        catch (Exception exception)
         {
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -257,6 +258,7 @@ public class BookController {
                     .body(new StringBuilder()
                             .append(error)
                             .append(modelDataException.getMessage()));
+
         }catch (Exception exception)
         {
 

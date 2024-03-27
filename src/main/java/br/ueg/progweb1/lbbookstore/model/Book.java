@@ -1,5 +1,6 @@
 package br.ueg.progweb1.lbbookstore.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 

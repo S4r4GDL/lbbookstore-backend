@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -119,11 +120,15 @@ public class BookServiceImpl implements BookService {
 
     //Validations
     private void validateMandatoryFields(Book bookData) {
-        if(bookData.getAuthor().isBlank()
-                || bookData.getPublisher().isBlank()
-                || bookData.getEdition().isBlank()
-                || bookData.getTitle().isBlank())
+
+        if(Objects.isNull(bookData.getAuthor())
+                || Objects.isNull(bookData.getPublisher())
+                || Objects.isNull(bookData.getEdition())
+                || Objects.isNull(bookData.getTitle())
+                || Objects.isNull(bookData.getQuantity())
+                || Objects.isNull(bookData.getPrice()))
             throw new BusinessException(ErrorValidation.MANDATORY_FIELD_VIOLATION);
+
     }
 
     private void prepareToCreate(Book newBook) {
