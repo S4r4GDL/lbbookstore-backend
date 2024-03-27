@@ -3,6 +3,7 @@ package br.ueg.progweb1.lbbookstore.controller;
 
 import br.ueg.progweb1.lbbookstore.exception.BusinessLogicException;
 import br.ueg.progweb1.lbbookstore.exception.MandatoryException;
+import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
 import br.ueg.progweb1.lbbookstore.model.dto.BookCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
@@ -106,7 +107,7 @@ public class BookController {
         try{
             BookReadDTO bookDTO = mapper.toDTO(service.getById(id));
             if(service.delete(bookDTO.id()))
-                return ResponseEntity.ok(bookDTO.toString() + " Delete worked");
+                return ResponseEntity.ok(bookDTO + " Delete worked");
 
         }catch (MandatoryException mandatoryException){
 
@@ -131,31 +132,112 @@ public class BookController {
                             .append(exception.getMessage()));
 
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.internalServerError().build();
     }
-
 
     @GetMapping
     @Operation(description = "End point to list all the books")
     public ResponseEntity<Object> getAllBooks()
     {
-        var response = service.listAll();
-        return ResponseEntity.ok(response);
+        String error = "Error while trying to get information about all books";
+
+        try{
+
+            var response = service.listAll();
+            return ResponseEntity.ok(response);
+
+        } catch (ModelDataException modelDataException){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new StringBuilder()
+                        .append(error)
+                        .append(modelDataException.getMessage()));
+        }
     }
 
     @GetMapping(path = "/{id}")
     @Operation(description = "End point to get a book by id")
     public ResponseEntity<Object> getBookById(@PathVariable Long id)
     {
-        var response = service.getById(id);
-        return ResponseEntity.ok(response);
-    }
+        String error = "Error while trying to get information about active books";
+        try {
 
-    @GetMapping(path = "/")
+            var response = service.getById(id);
+            return ResponseEntity.ok(response);
+
+        }catch (BusinessLogicException businessLogicException){
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new StringBuilder()
+                            .append(error)
+                            .append(businessLogicException.getMessage()));
+
+        }catch (ModelDataException modelDataException){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new StringBuilder()
+                            .append(error)
+                            .append(modelDataException.getMessage()));
+        }
+}
+
+    @GetMapping(path = "/actives")
     @Operation(description = "End point to get all active books")
     public ResponseEntity<Object> getActiveBooks()
     {
-        var response = service.getActiveBooks();
-        return ResponseEntity.ok(response);
+        String error = "Error while trying to get information the book by id";
+        try{
+
+            var response = service.getActiveBooks();
+            return ResponseEntity.ok(response);
+
+        }catch (ModelDataException modelDataException){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new StringBuilder()
+                            .append(error)
+                            .append(modelDataException.getMessage()));
+        }
+
     }
+
+    @GetMapping(path = "/authors/{author}")
+    @Operation(description = "End point to get all books by author")
+    public ResponseEntity<Object> getBookByAuthor(@PathVariable("author") String author)
+    {
+        String error = "Error while trying to get information about this author books";
+        try {
+
+            var response = service.getByAuthor(author);
+            return ResponseEntity.ok(response);
+
+        }catch (ModelDataException modelDataException){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new StringBuilder()
+                        .append(error)
+                        .append(modelDataException.getMessage()));
+        }
+    }
+
+    @GetMapping(path = "/titles/{title}")
+    @Operation(description = "End point to get all books by title")
+    public ResponseEntity<Object> getBookByTitle(@PathVariable("title") String title)
+    {
+        String error = "Error while trying to get information about this author books";
+        try {
+
+            var response = service.getByTitle(title);
+            return ResponseEntity.ok(response);
+
+        }catch (ModelDataException modelDataException){
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new StringBuilder()
+                            .append(error)
+                            .append(modelDataException.getMessage()));
+        }
+    }
+
+
 }
