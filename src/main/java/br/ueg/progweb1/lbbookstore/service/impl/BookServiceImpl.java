@@ -64,7 +64,10 @@ public class BookServiceImpl implements BookService {
     }
 
     private void validateBusinessLogicToUpdate(Book book) {
-
+        if(book.getPrice().intValue() <= 0)
+            throw new BusinessLogicException(ErrorValidation.INVALID_PRICE);
+        if(book.getQuantity() < 0)
+            throw new BusinessLogicException(ErrorValidation.INVALID_QUANTITY);
     }
 
     @Override
