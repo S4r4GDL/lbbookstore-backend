@@ -1,4 +1,4 @@
-package br.ueg.progweb1.lbbookstore.service;
+package br.ueg.progweb1.lbbookstore;
 
 import br.ueg.progweb1.lbbookstore.model.Book;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;

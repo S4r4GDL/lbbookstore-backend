@@ -72,14 +72,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getByAuthor(String author) {
-        var bookList = repository.findAllByAuthor(author);
+        var bookList = repository.findAllByAuthorContainsIgnoreCase(author);
         validateBusinessToGet(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getByPublisher(String publisher) {
-        var bookList = repository.findAllByPublisher(publisher);
+        var bookList = repository.findAllByPublisherContainsIgnoreCase(publisher);
         validateBusinessToGet(bookList);
         return bookList;
     }
@@ -107,7 +107,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getByTitle(String title) {
-        var bookList = repository.findAllByTitle(title);
+        var bookList = repository.findAllByTitleContainsIgnoreCase(title);
         validateBusinessToGet(bookList);
         return bookList;
     }

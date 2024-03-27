@@ -10,7 +10,6 @@ import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
 import br.ueg.progweb1.lbbookstore.model.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
