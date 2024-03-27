@@ -23,4 +23,6 @@ public interface BookService {
     Boolean delete(Long id);
 
     List<Book> getActiveBooks();
+
+    List<Book> getByTitle(String title);
 }
