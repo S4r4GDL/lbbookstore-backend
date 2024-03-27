@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ErrorValidation {
 
-    GENERAL(0L, "Undefined error!"),
+    GENERAL(500L, "Undefined error!"),
     INVALID_ID(400L, "Invalid Id!"),
     NOT_FOUND(404L, "Not found!"),
     MANDATORY_FIELD_VIOLATION(3L, "Mandatory field not filled!"),
