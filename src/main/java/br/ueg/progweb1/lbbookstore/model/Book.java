@@ -36,7 +36,7 @@ import java.time.LocalDate;
         @Column(name="release_year", nullable = false)
         private Integer releaseYear;
 
-        @Column(name="price", nullable = false, precision = 17)
+        @Column(name="price", nullable = false)
         private BigDecimal price;
 
         @Column(name="quantity", nullable = false)
