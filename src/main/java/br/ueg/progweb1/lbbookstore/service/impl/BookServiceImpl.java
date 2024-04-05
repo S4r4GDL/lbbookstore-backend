@@ -139,11 +139,17 @@ public class BookServiceImpl implements BookService {
 
     private void validateBusinessLogicToCreate(Book newBook) {
 
-        if(newBook.getPrice().intValue() <= 0)
-            throw new BusinessException(ErrorValidation.INVALID_PRICE);
-        if(newBook.getQuantity() < 0)
-            throw new BusinessException(ErrorValidation.INVALID_QUANTITY);
+        validateBasicBusinessLogic(newBook);
 
+    }
+
+    private void validateBasicBusinessLogic(Book book) {
+        if(book.getPrice().intValue() <= 0)
+            throw new BusinessException(ErrorValidation.INVALID_PRICE);
+        if(book.getQuantity() < 0)
+            throw new BusinessException(ErrorValidation.INVALID_QUANTITY);
+        if(book.getReleaseYear() < 0 || book.getReleaseYear() > LocalDate.now().getYear())
+            throw new BusinessException(ErrorValidation.INVALID_YEAR);
     }
 
     private void prepareToUpdate(Book newBook, Book bookBD) {
@@ -152,10 +158,7 @@ public class BookServiceImpl implements BookService {
     }
 
     private void validateBusinessLogicToUpdate(Book book) {
-        if(book.getPrice().intValue() <= 0)
-            throw new BusinessException(ErrorValidation.INVALID_PRICE);
-        if(book.getQuantity() < 0)
-            throw new BusinessException(ErrorValidation.INVALID_QUANTITY);
+        validateBasicBusinessLogic(book);
     }
 
     private void validateBusinessLogicToDelete(Book book) {
