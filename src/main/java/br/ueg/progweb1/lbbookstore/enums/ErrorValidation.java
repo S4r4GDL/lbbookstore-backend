@@ -11,7 +11,8 @@ public enum ErrorValidation {
     MANDATORY_FIELD_VIOLATION(3L, "Mandatory field must be filled up!"),
     INVALID_PRICE(4L, "The price must be higher than 0"),
     INVALID_QUANTITY(5L, "The quantity must be higher or equals to 0"),
-    INVALID_QUANTITY_TO_DELETE(6L, "The quantity must be 0 so you can delete");
+    INVALID_QUANTITY_TO_DELETE(6L, "The quantity must be 0 so you can delete"),
+    INVALID_YEAR(7L, "The year must be higher than 0 and lower than the current year");
 
     private Long code;
     private String message;
