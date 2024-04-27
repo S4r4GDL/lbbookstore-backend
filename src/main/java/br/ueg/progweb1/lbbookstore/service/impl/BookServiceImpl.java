@@ -6,69 +6,17 @@ import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import br.ueg.progweb1.lbbookstore.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl extends CrudService<Book, Long, BookRepository > implements BookService {
 
-    @Autowired
-    BookRepository repository;
-
-
-    @Override
-    public Book create(Book newBook) {
-        validateMandatoryFields(newBook);
-        validateBusinessLogicToCreate(newBook);
-        prepareToCreate(newBook);
-        return repository.save(newBook);
-    }
-
-    @Override
-    public Book update(Book newBook, Long id) {
-        validateMandatoryFields(newBook);
-        validateBusinessLogicToUpdate(newBook);
-        Book bookBD = validateId(id);
-        prepareToUpdate(newBook, bookBD);
-
-        return repository.save(newBook);
-    }
-
-    public Boolean delete(Long id) {
-        Book book = validateId(id);
-        validateBusinessLogicToDelete(book);
-        repository.deleteById(book.getId());
-        return repository.findById(id).isEmpty();
-
-    }
-
-    @Override
-    public List<Book> getAll() {
-        var bookList = repository.findAll();
-        validateBusinessToGet(bookList);
-        return bookList;
-    }
-
-    @Override
-    public Book getById(Long id) {
-        return validateId(id);
-    }
-
-    private Book validateId(Long id) {
-
-        Optional<Book> book = repository.findById(id);
-
-        if(book.isEmpty())
-            throw new BusinessException(ErrorValidation.INVALID_ID);
-
-        return book.get();
-    }
 
     @Override
     public List<Book> getByAuthor(String author) {
@@ -112,14 +60,14 @@ public class BookServiceImpl implements BookService {
         return bookList;
     }
 
-    private void validateBusinessToGet(List<Book> bookList)
+    protected void validateBusinessToGet(List<Book> bookList)
     {
         if(bookList.isEmpty())
             throw new ModelDataException(ErrorValidation.NOT_FOUND);
     }
 
     //Validations
-    private void validateMandatoryFields(Book bookData) {
+    protected void validateMandatoryFields(Book bookData) {
 
         if(Objects.isNull(bookData.getAuthor())
                 || Objects.isNull(bookData.getPublisher())
@@ -131,19 +79,19 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    private void prepareToCreate(Book newBook) {
+    protected void prepareToCreate(Book newBook) {
         newBook.setId(0L);
         newBook.setLastUpdate(LocalDate.now());
     }
 
 
-    private void validateBusinessLogicToCreate(Book newBook) {
+    protected void validateBusinessLogicToCreate(Book newBook) {
 
         validateBasicBusinessLogic(newBook);
 
     }
 
-    private void validateBasicBusinessLogic(Book book) {
+    protected void validateBasicBusinessLogic(Book book) {
         if(book.getPrice().intValue() <= 0)
             throw new BusinessException(ErrorValidation.INVALID_PRICE);
         if(book.getQuantity() < 0)
@@ -152,16 +100,16 @@ public class BookServiceImpl implements BookService {
             throw new BusinessException(ErrorValidation.INVALID_YEAR);
     }
 
-    private void prepareToUpdate(Book newBook, Book bookBD) {
+    protected void prepareToUpdate(Book newBook, Book bookBD) {
         newBook.setLastUpdate(LocalDate.now());
         newBook.setId(bookBD.getId());
     }
 
-    private void validateBusinessLogicToUpdate(Book book) {
+    protected void validateBusinessLogicToUpdate(Book book) {
         validateBasicBusinessLogic(book);
     }
 
-    private void validateBusinessLogicToDelete(Book book) {
+    protected void validateBusinessLogicToDelete(Book book) {
         if(book.getQuantity() > 0)
             throw new BusinessException(ErrorValidation.INVALID_QUANTITY_TO_DELETE);
 

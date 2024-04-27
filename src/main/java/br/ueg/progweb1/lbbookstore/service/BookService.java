@@ -5,14 +5,7 @@ import br.ueg.progweb1.lbbookstore.model.book.Book;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface BookService {
-    Book create(Book newBook);
-
-    Book update(Book book, Long id);
-
-    List<Book> getAll();
-
-    Book getById(Long id);
+public interface BookService extends GenericCrudService<Long, Book>{
 
     List<Book> getByAuthor(String author);
 
@@ -21,8 +14,6 @@ public interface BookService {
     List<Book> getByReleaseYear(Integer year);
 
     List<Book> getByLowerPrice(BigDecimal limitPrice);
-
-    Boolean delete(Long id);
 
     List<Book> getActiveBooks();
 
