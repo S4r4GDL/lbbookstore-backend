@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name="book")
 @Entity
 @EqualsAndHashCode(of="id")
-    public class Book {
+    public class Book implements GenericModel<Long> {
 
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)

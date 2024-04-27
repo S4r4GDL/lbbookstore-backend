@@ -28,11 +28,13 @@ public class BookController {
     @Autowired
     BookMapper mapper;
 
+
     @PostMapping
     @Operation(description = "End point to create a new book")
     public ResponseEntity<Object> createBook(@RequestBody BookCreateDTO bookDTO)
     {
         String error = "Error while trying to create a book: ";
+
         try {
 
             var response = mapper.toDTO(service.create(mapper.toModel(bookDTO)));
@@ -60,7 +62,6 @@ public class BookController {
                             .append(exception.getMessage()));
 
         }
-
 
     }
 
