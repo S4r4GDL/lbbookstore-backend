@@ -1,5 +1,6 @@
-package br.ueg.progweb1.lbbookstore.model;
+package br.ueg.progweb1.lbbookstore.model.mug;
 
+import br.ueg.progweb1.lbbookstore.model.GenericModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Table(name="mug")
 @Entity
 @EqualsAndHashCode(of="id")
-public class Mug implements GenericModel<Long>{
+public class Mug implements GenericModel<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
