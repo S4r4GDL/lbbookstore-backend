@@ -5,9 +5,9 @@ import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.exception.MandatoryException;
 import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
-import br.ueg.progweb1.lbbookstore.model.dto.BookCreateDTO;
-import br.ueg.progweb1.lbbookstore.model.dto.BookReadDTO;
-import br.ueg.progweb1.lbbookstore.model.dto.BookUpdateDTO;
+import br.ueg.progweb1.lbbookstore.model.book.dto.BookCreateDTO;
+import br.ueg.progweb1.lbbookstore.model.book.dto.BookDTO;
+import br.ueg.progweb1.lbbookstore.model.book.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class BookController {
 
         try {
 
-            var response = mapper.toDTO(service.create(mapper.toModel(bookDTO)));
+            var response = mapper.fromModelToDTO(service.create(mapper.fromCreateDTOToModel(bookDTO)));
             return ResponseEntity.ok(response);
 
         }catch (MandatoryException mandatoryException){
@@ -72,7 +72,7 @@ public class BookController {
         String error = "Error while trying to update a book: ";
         try{
 
-            var response = mapper.toDTO(service.update(mapper.toModel(bookDTO), id));
+            var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOtoModel(bookDTO), id));
             return ResponseEntity.ok(response);
 
         }catch (MandatoryException mandatoryException){
@@ -107,7 +107,7 @@ public class BookController {
         String error = "Error while trying to delete a book: ";
 
         try{
-            BookReadDTO bookDTO = mapper.toDTO(service.getById(id));
+            BookDTO bookDTO = mapper.fromModelToDTO(service.getById(id));
             if(service.delete(bookDTO.id()))
                 return ResponseEntity.ok(bookDTO + " Delete worked");
 
@@ -146,7 +146,7 @@ public class BookController {
 
         try{
 
-            var response = service.getAll();
+            var response = mapper.fromModelListToDTOList(service.getAll());
             return ResponseEntity.ok(response);
 
         } catch (ModelDataException modelDataException){

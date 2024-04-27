@@ -1,6 +1,6 @@
 package br.ueg.progweb1.lbbookstore.service;
 
-import br.ueg.progweb1.lbbookstore.model.Book;
+import br.ueg.progweb1.lbbookstore.model.book.Book;
 
 import java.math.BigDecimal;
 import java.util.List;

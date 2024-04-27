@@ -1,6 +1,6 @@
-package br.ueg.progweb1.lbbookstore.model;
+package br.ueg.progweb1.lbbookstore.model.book;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import br.ueg.progweb1.lbbookstore.model.GenericModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Table(name="book")
 @Entity
 @EqualsAndHashCode(of="id")
-    public class Book implements GenericModel<Long> {
+public class Book implements GenericModel<Long> {
 
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
