@@ -1,6 +1,6 @@
 package br.ueg.progweb1.lbbookstore;
 
-import br.ueg.progweb1.lbbookstore.model.Book;
+import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
