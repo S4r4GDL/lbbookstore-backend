@@ -11,8 +11,6 @@ import br.ueg.progweb1.lbbookstore.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,52 +26,54 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     @Override
     public List<Book> getByAuthor(String author) {
         var bookList = repository.findAllByAuthorContainsIgnoreCase(author);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getByPublisher(String publisher) {
         var bookList = repository.findAllByPublisherContainsIgnoreCase(publisher);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getByReleaseYear(Integer year) {
         var bookList = repository.findAllByReleaseYear(year);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getByLowerPrice(BigDecimal limitPrice) {
         var bookList = repository.findAllByPriceLessThan(limitPrice);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getActiveBooks() {
         var bookList = repository.findAllByActive(true);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
     @Override
     public List<Book> getByTitle(String title) {
         var bookList = repository.findAllByTitleContainsIgnoreCase(title);
-        validateBusinessToGet(bookList);
+        validateBusinessToList(bookList);
         return bookList;
     }
 
-    protected void validateBusinessToGet(List<Book> bookList)
+    @Override
+    protected void validateBusinessToList(List<Book> bookList)
     {
         if(bookList.isEmpty())
             throw new ModelDataException(ErrorValidation.NOT_FOUND);
     }
 
     //Validations
+    @Override
     protected void validateMandatoryFields(Book bookData) {
         LOG.info(String.valueOf(bookData));
         if(Objects.isNull(bookData.getAuthor())
@@ -87,6 +87,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
 
     }
 
+    @Override
     protected void prepareToCreate(Book newBook) {
         newBook.setId(0L);
         newBook.setLastUpdate(LocalDate.now());
@@ -94,12 +95,14 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     }
 
 
+    @Override
     protected void validateBusinessLogicToCreate(Book newBook) {
 
         validateBasicBusinessLogic(newBook);
 
     }
 
+    @Override
     protected void validateBasicBusinessLogic(Book book) {
         if(book.getPrice().intValue() <= 0)
             throw new BusinessException(ErrorValidation.INVALID_PRICE);
@@ -109,15 +112,18 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
             throw new BusinessException(ErrorValidation.INVALID_YEAR);
     }
 
+    @Override
     protected void prepareToUpdate(Book newBook, Book bookBD) {
         newBook.setLastUpdate(LocalDate.now());
         newBook.setId(bookBD.getId());
     }
 
+    @Override
     protected void validateBusinessLogicToUpdate(Book book) {
         validateBasicBusinessLogic(book);
     }
 
+    @Override
     protected void validateBusinessLogicToDelete(Book book) {
         if(book.getQuantity() > 0)
             throw new BusinessException(ErrorValidation.INVALID_QUANTITY_TO_DELETE);
