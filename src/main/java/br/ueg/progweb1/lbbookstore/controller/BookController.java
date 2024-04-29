@@ -1,16 +1,13 @@
 package br.ueg.progweb1.lbbookstore.controller;
 
 
-import br.ueg.progweb1.lbbookstore.AppStartupRunner;
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
+import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,56 +16,12 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping(path = "${api.version}/books")
-public class BookController {
-
-    @Autowired
-    BookService service;
-
-    @Autowired
-    BookMapper mapper;
-
-    private static final Logger LOG =
-            LoggerFactory.getLogger(AppStartupRunner.class);
-
-
-    @PostMapping
-    @Operation(description = "End point to create a new book")
-    public ResponseEntity<Object> createBook(@RequestBody BookCreateDTO bookDTO)
-    {
-
-        var result = mapper.fromCreateDTOToModel(bookDTO);
-        LOG.info("Book created: {}", result);
-        var response = mapper.fromModelToDTO(service.create(result));
-
-            return ResponseEntity.ok(response);
-
-    }
-
-    @PutMapping(path = "/{id}")
-    @Operation(description = "End point to update a book")
-    public ResponseEntity<Object> updateBook(@PathVariable("id") Long id, @RequestBody BookUpdateDTO bookDTO)
-    {
-        var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOtoModel(bookDTO), id));
-            return ResponseEntity.ok(response);
-
-    }
-
-    @DeleteMapping(path = "/{id}")
-    @Operation(description = "End point to delete a book")
-    public ResponseEntity<Object> deleteBook(@PathVariable("id") Long id)
-    {
-        BookDTO bookDTO = mapper.fromModelToDTO(service.delete(id));
-        return ResponseEntity.ok(bookDTO + " Delete worked");
-    }
-
-    @GetMapping
-    @Operation(description = "End point to list all the books")
-    public ResponseEntity<Object> getAllBooks()
-    {
-        var response = mapper.fromModelListToDTOList(service.getAll());
-        return ResponseEntity.ok(response);
-
-    }
+public class BookController extends CrudController<Book, Long,
+        BookDTO,
+        BookCreateDTO,
+        BookUpdateDTO,
+        BookService,
+        BookMapper>{
 
     @GetMapping(path = "/{id}")
     @Operation(description = "End point to get a book by id: ")
@@ -131,7 +84,6 @@ public class BookController {
     @Operation(description = "End point to get all books by release year")
     public ResponseEntity<Object> getBookByReleaseYear (@RequestParam Integer year)
     {
-
             var response = service.getByReleaseYear(year);
             return ResponseEntity.ok(response);
     }
