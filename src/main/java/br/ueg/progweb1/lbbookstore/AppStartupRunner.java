@@ -2,7 +2,9 @@ package br.ueg.progweb1.lbbookstore;
 
 import br.ueg.progweb1.lbbookstore.model.Product;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
+import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
+import br.ueg.progweb1.lbbookstore.repository.MugRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,10 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private MugRepository mugRepository;
+
 
     public void initializeData(){
         LOG.info("Getting started with initializeData...");
@@ -115,6 +121,38 @@ public class AppStartupRunner implements ApplicationRunner {
                 .lastUpdate(LocalDate.now())
                 .active(true).build();
         this.bookRepository.save(newBook);
+
+        Mug newMug = Mug.builder().theme("Hollow knight")
+                        .price(new BigDecimal("47.99"))
+                        .quantity(15)
+                        .lastUpdate(LocalDate.now())
+                        .active(true).build();
+
+        this.mugRepository.save(newMug);
+
+        newMug = Mug.builder().theme("Lonely hearts")
+                .price(new BigDecimal("39.99"))
+                .quantity(10)
+                .lastUpdate(LocalDate.now())
+                .active(true).build();
+
+        this.mugRepository.save(newMug);
+
+        newMug = Mug.builder().theme("Flowers")
+                .price(new BigDecimal("25.00"))
+                .quantity(20)
+                .lastUpdate(LocalDate.now())
+                .active(true).build();
+
+        this.mugRepository.save(newMug);
+
+        newMug = Mug.builder().theme("New wave")
+                .price(new BigDecimal("50.00"))
+                .quantity(0)
+                .lastUpdate(LocalDate.now())
+                .active(false).build();
+
+        this.mugRepository.save(newMug);
 
         LOG.info("...End of initializeData");
     }
