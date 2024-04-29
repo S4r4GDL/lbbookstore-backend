@@ -33,8 +33,5 @@ public class Book extends Product{
         @Column(name="release_year", nullable = false)
         private Integer releaseYear;
 
-
-
-
     }
 

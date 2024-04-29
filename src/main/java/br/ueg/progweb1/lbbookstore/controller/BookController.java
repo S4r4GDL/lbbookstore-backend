@@ -23,21 +23,12 @@ public class BookController extends CrudController<Book, Long,
         BookService,
         BookMapper>{
 
-    @GetMapping(path = "/{id}")
-    @Operation(description = "End point to get a book by id: ")
-    public ResponseEntity<Object> getBookById(@PathVariable Long id)
-    {
-            var response = service.getById(id);
-            return ResponseEntity.ok(response);
-
-}
-
     @GetMapping(path = "/search/actives")
     @Operation(description = "End point to get all active books")
     public ResponseEntity<Object> getActiveBooks()
     {
-            var response = service.getActiveBooks();
-            return ResponseEntity.ok(response);
+        var response = service.getActiveBooks();
+        return ResponseEntity.ok(response);
 
     }
 
@@ -46,7 +37,7 @@ public class BookController extends CrudController<Book, Long,
     public ResponseEntity<Object> getBookByAuthor(@RequestParam String author)
     {
         var response = service.getByAuthor(author);
-            return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
 
     }
 
@@ -55,8 +46,8 @@ public class BookController extends CrudController<Book, Long,
     public ResponseEntity<Object> getBookByTitle(@RequestParam String title)
     {
 
-            var response = service.getByTitle(title);
-            return ResponseEntity.ok(response);
+        var response = service.getByTitle(title);
+        return ResponseEntity.ok(response);
 
     }
 
@@ -65,8 +56,8 @@ public class BookController extends CrudController<Book, Long,
     public ResponseEntity<Object> getBookByLowerPrice(@RequestParam BigDecimal price)
     {
 
-            var response = service.getByLowerPrice(price);
-            return ResponseEntity.ok(response);
+        var response = service.getByLowerPrice(price);
+        return ResponseEntity.ok(response);
 
     }
 
@@ -75,8 +66,8 @@ public class BookController extends CrudController<Book, Long,
     public ResponseEntity<Object> getBookByPublisher(@RequestParam String publisher)
     {
 
-            var response = service.getByPublisher(publisher);
-            return ResponseEntity.ok(response);
+        var response = service.getByPublisher(publisher);
+        return ResponseEntity.ok(response);
 
     }
 
@@ -84,8 +75,9 @@ public class BookController extends CrudController<Book, Long,
     @Operation(description = "End point to get all books by release year")
     public ResponseEntity<Object> getBookByReleaseYear (@RequestParam Integer year)
     {
-            var response = service.getByReleaseYear(year);
-            return ResponseEntity.ok(response);
+        var response = service.getByReleaseYear(year);
+        return ResponseEntity.ok(response);
     }
+
 
 }

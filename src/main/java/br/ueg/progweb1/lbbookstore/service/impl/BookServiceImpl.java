@@ -5,6 +5,7 @@ import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
+import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 
@@ -116,6 +117,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     protected void prepareToUpdate(Book newBook, Book bookBD) {
         newBook.setLastUpdate(LocalDate.now());
         newBook.setId(bookBD.getId());
+        newBook.setActive(bookBD.getActive());
     }
 
     @Override
@@ -131,4 +133,11 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     }
 
 
+    @Override
+    public Book active(Long id) {
+        Book book = validateId(id);
+        book.setActive(!(book.getActive()));
+        repository.save(book);
+        return book;
+    }
 }
