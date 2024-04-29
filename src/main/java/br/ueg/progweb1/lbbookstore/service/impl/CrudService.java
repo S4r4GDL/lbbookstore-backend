@@ -24,7 +24,7 @@ public abstract class CrudService <
 
     public List<MODEL> getAll() {
         var modelList = repository.findAll();
-        validateBusinessToGet(modelList);
+        validateBusinessToList(modelList);
         return modelList;
     }
     public MODEL getById(PK id) {
@@ -67,7 +67,7 @@ public abstract class CrudService <
     //Validations
     protected abstract void validateBasicBusinessLogic(MODEL model);
 
-    protected abstract void validateBusinessToGet(List<MODEL> modelList);
+    protected abstract void validateBusinessToList(List<MODEL> modelList);
 
     protected abstract void validateMandatoryFields(MODEL model);
 
