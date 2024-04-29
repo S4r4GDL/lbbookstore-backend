@@ -11,6 +11,7 @@ public interface GenericCrudController < PK, DTO, CreateDTO, UpdateDTO  > {
 
     ResponseEntity<DTO> create(@RequestBody CreateDTO createDTO);
     ResponseEntity<DTO> update(@PathVariable("id") PK id, @RequestBody UpdateDTO updateDTO);
+    ResponseEntity<DTO> getItemById(@PathVariable PK id);
     ResponseEntity<DTO> delete(@PathVariable("id") PK id);
-    ResponseEntity<List<DTO>> getAllBooks();
+    ResponseEntity<List<DTO>> getAllItems();
 }

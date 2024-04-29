@@ -3,6 +3,7 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
+import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.service.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -55,7 +56,7 @@ public abstract class CrudService <
         repository.deleteById(model.getId());
         return model;
     }
-    private MODEL validateId(PK id) {
+    protected MODEL validateId(PK id) {
 
         Optional<MODEL> model = repository.findById(id);
 
@@ -63,6 +64,9 @@ public abstract class CrudService <
             throw new BusinessException(ErrorValidation.INVALID_ID);
         return model.get();
     }
+
+
+    public abstract MODEL active(PK id);
 
     //Validations
     protected abstract void validateBasicBusinessLogic(MODEL model);

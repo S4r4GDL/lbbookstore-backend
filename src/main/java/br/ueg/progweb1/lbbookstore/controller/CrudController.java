@@ -3,6 +3,7 @@ package br.ueg.progweb1.lbbookstore.controller;
 import br.ueg.progweb1.lbbookstore.AppStartupRunner;
 import br.ueg.progweb1.lbbookstore.mapper.GenericMapper;
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
+import br.ueg.progweb1.lbbookstore.model.mug.dto.MugDTO;
 import br.ueg.progweb1.lbbookstore.service.GenericCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -46,6 +47,17 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
 
     }
 
+    @GetMapping(path = "/{id}")
+    @Operation(description = "End point to get an item by id: ")
+    @Override
+    public ResponseEntity<DTO> getItemById(@PathVariable PK id) {
+
+        var response = mapper.fromModelToDTO(service.getById(id));
+        return ResponseEntity.ok(response);
+
+    }
+
+
     @PutMapping(path = "/{id}")
     @Operation(description = "End point to update an item")
     @Override
@@ -71,10 +83,19 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
     @GetMapping
     @Operation(description = "End point to list all items")
     @Override
-    public ResponseEntity<List<DTO>> getAllBooks(){
+    public ResponseEntity<List<DTO>> getAllItems(){
 
         var response = mapper.fromModelListToDTOList(service.getAll());
         return ResponseEntity.ok(response);
 
     }
+
+    @PostMapping("/{id}")
+    @Operation(description = "End point to activate or not an item")
+    public ResponseEntity<DTO> active(@PathVariable PK id)
+    {
+        var response = mapper.fromModelToDTO(service.active(id));
+        return ResponseEntity.ok(response);
+    }
+
 }
