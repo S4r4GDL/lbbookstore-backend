@@ -6,10 +6,13 @@ import br.ueg.progweb1.lbbookstore.model.GenericModel;
 import br.ueg.progweb1.lbbookstore.service.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional(propagation = Propagation.REQUIRED)
 public abstract class CrudService <
         MODEL extends GenericModel<PK>, PK,
         REPOSITORY extends JpaRepository<MODEL, PK>>
@@ -46,12 +49,11 @@ public abstract class CrudService <
     }
 
     @Override
-    public Boolean delete(PK id) {
+    public MODEL delete(PK id) {
         MODEL model = validateId(id);
         validateBusinessLogicToDelete(model);
         repository.deleteById(model.getId());
-        return repository.findById(id).isEmpty();
-
+        return model;
     }
     private MODEL validateId(PK id) {
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface GenericMapper<PK, MODEL extends GenericModel<PK>, DTO, CreateDTO, UpdateDTO>{
 
+
     MODEL fromCreateDTOToModel(CreateDTO dto);
     MODEL fromUpdateDTOtoModel(UpdateDTO dto);
 
