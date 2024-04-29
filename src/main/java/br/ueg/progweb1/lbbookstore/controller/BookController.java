@@ -1,17 +1,16 @@
 package br.ueg.progweb1.lbbookstore.controller;
 
 
-import br.ueg.progweb1.lbbookstore.exception.BusinessException;
-import br.ueg.progweb1.lbbookstore.exception.MandatoryException;
-import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
+import br.ueg.progweb1.lbbookstore.AppStartupRunner;
 import br.ueg.progweb1.lbbookstore.mapper.BookMapper;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookUpdateDTO;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +27,19 @@ public class BookController {
     @Autowired
     BookMapper mapper;
 
+    private static final Logger LOG =
+            LoggerFactory.getLogger(AppStartupRunner.class);
+
 
     @PostMapping
     @Operation(description = "End point to create a new book")
     public ResponseEntity<Object> createBook(@RequestBody BookCreateDTO bookDTO)
     {
-            var response = mapper.fromModelToDTO(service.create(mapper.fromCreateDTOToModel(bookDTO)));
+
+        var result = mapper.fromCreateDTOToModel(bookDTO);
+        LOG.info("Book created: {}", result);
+        var response = mapper.fromModelToDTO(service.create(result));
+
             return ResponseEntity.ok(response);
 
     }
@@ -51,8 +57,8 @@ public class BookController {
     @Operation(description = "End point to delete a book")
     public ResponseEntity<Object> deleteBook(@PathVariable("id") Long id)
     {
-            BookDTO bookDTO = mapper.fromModelToDTO(service.getById(id));
-            return ResponseEntity.ok(bookDTO + " Delete worked");
+        BookDTO bookDTO = mapper.fromModelToDTO(service.delete(id));
+        return ResponseEntity.ok(bookDTO + " Delete worked");
     }
 
     @GetMapping

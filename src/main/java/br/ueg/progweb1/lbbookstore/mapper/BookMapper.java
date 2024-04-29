@@ -5,6 +5,7 @@ import br.ueg.progweb1.lbbookstore.model.book.dto.BookDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.book.dto.BookUpdateDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper extends GenericMapper<
@@ -13,4 +14,6 @@ public interface BookMapper extends GenericMapper<
         BookDTO,
         BookCreateDTO,
         BookUpdateDTO> 
-{}
+{
+    BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
+}

@@ -1,5 +1,6 @@
 package br.ueg.progweb1.lbbookstore;
 
+import br.ueg.progweb1.lbbookstore.model.Product;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import org.slf4j.Logger;
@@ -40,6 +41,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 .quantity(10)
                 .lastUpdate(LocalDate.now())
                 .active(true).build();
+
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()

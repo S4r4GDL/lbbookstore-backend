@@ -1,8 +1,10 @@
 package br.ueg.progweb1.lbbookstore.model.book;
 
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
+import br.ueg.progweb1.lbbookstore.model.Product;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,16 +12,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 @Table(name="book")
 @Entity
-@EqualsAndHashCode(of="id")
-public class Book implements GenericModel<Long> {
+public class Book extends Product{
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        @Column(name="id")
-        private Long id;
 
         @Column(name="title", length = 250, nullable = false)
         private String title;
@@ -36,17 +33,7 @@ public class Book implements GenericModel<Long> {
         @Column(name="release_year", nullable = false)
         private Integer releaseYear;
 
-        @Column(name="price", nullable = false)
-        private BigDecimal price;
 
-        @Column(name="quantity", nullable = false)
-        private Integer quantity;
-
-        @Column(name="last_Updade", nullable = false)
-        private LocalDate lastUpdate;
-
-        @Column(name="active", nullable = false)
-        private Boolean active;
 
 
     }
