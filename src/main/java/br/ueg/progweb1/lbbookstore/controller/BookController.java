@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @RestController
@@ -25,57 +26,57 @@ public class BookController extends CrudController<Book, Long,
 
     @GetMapping(path = "/search/actives")
     @Operation(description = "End point to get all active books")
-    public ResponseEntity<Object> getActiveBooks()
+    public ResponseEntity<List<BookDTO>> getActiveBooks()
     {
-        var response = service.getActiveBooks();
+        var response = mapper.fromModelListToDTOList(service.getActiveBooks());
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping(path = "/search/authors")
     @Operation(description = "End point to get all books by author")
-    public ResponseEntity<Object> getBookByAuthor(@RequestParam String author)
+    public ResponseEntity<List<BookDTO>> getBookByAuthor(@RequestParam String author)
     {
-        var response = service.getByAuthor(author);
+        var response = mapper.fromModelListToDTOList(service.getByAuthor(author));
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping(path = "/search/titles")
     @Operation(description = "End point to get all books by title")
-    public ResponseEntity<Object> getBookByTitle(@RequestParam String title)
+    public ResponseEntity<List<BookDTO>> getBookByTitle(@RequestParam String title)
     {
 
-        var response = service.getByTitle(title);
+        var response = mapper.fromModelListToDTOList(service.getByTitle(title));
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping("/search/lower-prices")
     @Operation(description = "End point to get all books with prices lower that stipulated")
-    public ResponseEntity<Object> getBookByLowerPrice(@RequestParam BigDecimal price)
+    public ResponseEntity<List<BookDTO>> getBookByLowerPrice(@RequestParam BigDecimal price)
     {
 
-        var response = service.getByLowerPrice(price);
+        var response = mapper.fromModelListToDTOList(service.getByLowerPrice(price));
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping("/search/publishers")
     @Operation(description = "End point to get all books by publisher")
-    public ResponseEntity<Object> getBookByPublisher(@RequestParam String publisher)
+    public ResponseEntity<List<BookDTO>> getBookByPublisher(@RequestParam String publisher)
     {
 
-        var response = service.getByPublisher(publisher);
+        var response = mapper.fromModelListToDTOList(service.getByPublisher(publisher));
         return ResponseEntity.ok(response);
 
     }
 
     @GetMapping("/search/year")
     @Operation(description = "End point to get all books by release year")
-    public ResponseEntity<Object> getBookByReleaseYear (@RequestParam Integer year)
+    public ResponseEntity<List<BookDTO>> getBookByReleaseYear (@RequestParam Integer year)
     {
-        var response = service.getByReleaseYear(year);
+        var response = mapper.fromModelListToDTOList(service.getByReleaseYear(year));
         return ResponseEntity.ok(response);
     }
 
