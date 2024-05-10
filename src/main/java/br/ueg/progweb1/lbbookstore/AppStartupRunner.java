@@ -46,7 +46,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("15.00"))
                 .quantity(10)
                 .lastUpdate(LocalDate.now())
-                .active(true).build();
+                .active(true)
+                .description("Description").build();
 
         this.bookRepository.save(newBook);
 
@@ -59,7 +60,8 @@ public class AppStartupRunner implements ApplicationRunner {
             .price(new BigDecimal("18.99"))
             .quantity(10)
             .lastUpdate(LocalDate.now())
-            .active(true).build();
+            .active(true)
+            .description("Description").build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -71,7 +73,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("25.99"))
                 .quantity(12)
                 .lastUpdate(LocalDate.now())
-                .active(true).build();
+                .active(true)
+                .description("Description").build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -95,7 +98,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("20.99"))
                 .quantity(16)
                 .lastUpdate(LocalDate.now())
-                .active(true).build();
+                .active(true)
+                .description("Description").build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -107,7 +111,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("70.00"))
                 .quantity(0)
                 .lastUpdate(LocalDate.now())
-                .active(false).build();
+                .active(false)
+                .description("Description").build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -119,7 +124,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("14.99"))
                 .quantity(60)
                 .lastUpdate(LocalDate.now())
-                .active(true).build();
+                .active(true)
+                .description("Description").build();
         this.bookRepository.save(newBook);
 
         Mug newMug = Mug.builder().theme("Hollow knight")

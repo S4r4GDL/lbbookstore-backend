@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "${api.version}/books")
+@CrossOrigin()
 public class BookController extends CrudController<Book, Long,
         BookDTO,
         BookCreateDTO,

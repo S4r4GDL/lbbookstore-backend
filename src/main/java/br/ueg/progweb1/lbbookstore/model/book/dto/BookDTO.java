@@ -14,6 +14,7 @@ public record BookDTO(
         BigDecimal price,
         Integer quantity,
         LocalDate lastUpdate,
-        Boolean active
+        Boolean active,
+        String description
 )
 {}

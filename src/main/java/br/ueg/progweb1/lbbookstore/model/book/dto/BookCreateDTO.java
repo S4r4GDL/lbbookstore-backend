@@ -9,5 +9,6 @@ public record BookCreateDTO(String title,
                             Integer releaseYear,
                             BigDecimal price,
                             Integer quantity,
-                            Boolean active)
+                            Boolean active,
+                            String description)
 {}

@@ -32,4 +32,7 @@ public class Product implements GenericModel<Long> {
     @Column(name="active", nullable = false)
     protected Boolean active;
 
+    @Column(name="description", length = 450)
+    protected String description;
+
 }

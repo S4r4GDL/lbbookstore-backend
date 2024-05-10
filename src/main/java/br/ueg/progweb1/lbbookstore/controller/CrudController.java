@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,7 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
     @Override
     public ResponseEntity<DTO> getItemById(@PathVariable PK id) {
 
+        LOG.info("Id: {}", id);
         var response = mapper.fromModelToDTO(service.getById(id));
         return ResponseEntity.ok(response);
 
@@ -80,12 +82,13 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "End point to list all items")
     @Override
     public ResponseEntity<List<DTO>> getAllItems(){
 
-        var response = mapper.fromModelListToDTOList(service.getAll());
+        List<DTO>response = mapper.fromModelListToDTOList(service.getAll());
+        LOG.info("list: {}", response);
         return ResponseEntity.ok(response);
 
     }

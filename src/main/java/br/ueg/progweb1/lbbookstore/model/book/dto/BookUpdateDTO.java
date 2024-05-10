@@ -8,5 +8,6 @@ public record BookUpdateDTO(String title,
                             String edition,
                             Integer releaseYear,
                             BigDecimal price,
-                            Integer quantity)
+                            Integer quantity,
+                            String description)
 {}

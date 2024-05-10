@@ -129,7 +129,6 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     protected void validateBusinessLogicToDelete(Book book) {
         if(book.getQuantity() > 0)
             throw new BusinessException(ErrorValidation.INVALID_QUANTITY_TO_DELETE);
-
     }
 
 
