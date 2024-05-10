@@ -77,10 +77,10 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     @Override
     protected void validateMandatoryFields(Book bookData) {
         LOG.info(String.valueOf(bookData));
-        if(Objects.isNull(bookData.getAuthor())
-                || Objects.isNull(bookData.getPublisher())
-                || Objects.isNull(bookData.getEdition())
-                || Objects.isNull(bookData.getTitle())
+        if ( bookData.getTitle().isEmpty() ||
+                bookData.getAuthor().isEmpty()
+                || bookData.getPublisher().isEmpty()
+                || bookData.getEdition().isEmpty()
                 || Objects.isNull(bookData.getQuantity())
                 || Objects.isNull(bookData.getPrice())
                 || Objects.isNull(bookData.getReleaseYear()))
@@ -98,9 +98,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
 
     @Override
     protected void validateBusinessLogicToCreate(Book newBook) {
-
         validateBasicBusinessLogic(newBook);
-
     }
 
     @Override
