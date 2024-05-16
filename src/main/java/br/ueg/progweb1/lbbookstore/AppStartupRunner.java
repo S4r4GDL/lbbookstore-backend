@@ -1,6 +1,5 @@
 package br.ueg.progweb1.lbbookstore;
 
-import br.ueg.progweb1.lbbookstore.model.Product;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
