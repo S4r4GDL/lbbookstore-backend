@@ -1,7 +1,5 @@
 package br.ueg.progweb1.lbbookstore.service;
 
-import br.ueg.progweb1.lbbookstore.model.GenericModel;
-
 import java.util.List;
 
 public interface GenericCrudService<PK, MODEL> {
@@ -17,3 +15,4 @@ public interface GenericCrudService<PK, MODEL> {
 
     MODEL active(PK id);
 }
+

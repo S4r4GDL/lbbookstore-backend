@@ -3,7 +3,6 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
-import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.service.GenericCrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;

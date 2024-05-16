@@ -8,10 +8,9 @@ public interface GenericMapper<PK, MODEL extends GenericModel<PK>, DTO, CreateDT
 
 
     MODEL fromCreateDTOToModel(CreateDTO dto);
-    MODEL fromUpdateDTOtoModel(UpdateDTO dto);
-
+    MODEL fromUpdateDTOToModel(UpdateDTO dto);
     DTO fromModelToDTO(MODEL model);
-
+    MODEL fromDTOToModel(DTO dto);
     List<DTO> fromModelListToDTOList(List<MODEL> modelList);
 
 }

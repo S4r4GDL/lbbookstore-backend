@@ -3,7 +3,6 @@ package br.ueg.progweb1.lbbookstore.controller;
 import br.ueg.progweb1.lbbookstore.AppStartupRunner;
 import br.ueg.progweb1.lbbookstore.mapper.GenericMapper;
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
-import br.ueg.progweb1.lbbookstore.model.mug.dto.MugDTO;
 import br.ueg.progweb1.lbbookstore.service.GenericCrudService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CrudController < MODEL extends GenericModel<PK>,
@@ -66,7 +66,7 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
     public ResponseEntity<DTO> update(@PathVariable("id") PK id, @RequestBody UpdateDTO updateDTO) {
 
         LOG.info("Item to update: {}", updateDTO);
-        var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOtoModel(updateDTO), id));
+        var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOToModel(updateDTO), id));
         LOG.info("Item updated: {}", response);
         return ResponseEntity.ok(response);
 
@@ -81,6 +81,22 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
         LOG.info("Item deleted: {}", response);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "End point to delete items")
+    @Override
+    public ResponseEntity<List<DTO>> deleteItems(@RequestBody List<DTO> items){
+        LOG.info("Items to delete: {} ", items);
+        List<DTO> response = new ArrayList<>();
+
+        for(DTO item: items) {
+            response.add(mapper.fromModelToDTO(service.delete(mapper.fromDTOToModel(item).getId())));
+            LOG.info("Item deleted from deleteItems: {}", item);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "End point to list all items")
