@@ -47,7 +47,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 .quantity(10)
                 .lastUpdate(LocalDate.now())
                 .active(true)
-                .description("Description").build();
+                .description(" Poems collection by pablo neruda ").build();
 
         this.bookRepository.save(newBook);
 
@@ -58,10 +58,12 @@ public class AppStartupRunner implements ApplicationRunner {
             .publisher("Galactic Press")
             .releaseYear(2015)
             .price(new BigDecimal("18.99"))
-            .quantity(10)
+            .quantity(0)
             .lastUpdate(LocalDate.now())
             .active(true)
-            .description("Description").build();
+            .description("A science fiction novel that explores the mysteries of" +
+                    " space travel and contact with alien civilizations.")
+                .build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -74,7 +76,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .quantity(12)
                 .lastUpdate(LocalDate.now())
                 .active(true)
-                .description("Description").build();
+                .description("The story follows Winston Smith," +
+                        " a man who rebels against the oppressive regime.").build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -99,7 +102,9 @@ public class AppStartupRunner implements ApplicationRunner {
                 .quantity(16)
                 .lastUpdate(LocalDate.now())
                 .active(true)
-                .description("Description").build();
+                .description("Follows the enduring love story of Florentino Ariza" +
+                        " and Fermina Daza, who experience a passionate romance in their youth.").build();
+
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -111,8 +116,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("70.00"))
                 .quantity(0)
                 .lastUpdate(LocalDate.now())
-                .active(false)
-                .description("Description").build();
+                .active(false).build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
@@ -125,7 +129,8 @@ public class AppStartupRunner implements ApplicationRunner {
                 .quantity(60)
                 .lastUpdate(LocalDate.now())
                 .active(true)
-                .description("Description").build();
+                .description("Tells the story of Gregor Samsa, a traveling salesman" +
+                        " who wakes up one morning transformed into a giant insect.").build();
         this.bookRepository.save(newBook);
 
         Mug newMug = Mug.builder().theme("Hollow knight")
