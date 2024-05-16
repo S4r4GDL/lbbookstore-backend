@@ -12,7 +12,8 @@ public enum ErrorValidation {
     INVALID_PRICE(4L, "The price must be higher than 0"),
     INVALID_QUANTITY(5L, "The quantity must be higher or equals to 0"),
     INVALID_QUANTITY_TO_DELETE(6L, "The quantity must be 0 so you can delete"),
-    INVALID_YEAR(7L, "The year must be higher than 0 and lower than the current year");
+    INVALID_YEAR(7L, "The year must be higher than 0 and lower than the current year"),
+    INVALID_STATUS_TO_DELETE(8L, "The product must be inactive so you can delete");
 
     private Long code;
     private String message;

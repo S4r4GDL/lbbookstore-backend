@@ -5,7 +5,6 @@ import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
-import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import br.ueg.progweb1.lbbookstore.service.BookService;
 
@@ -127,8 +126,9 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     protected void validateBusinessLogicToDelete(Book book) {
         if(book.getQuantity() > 0)
             throw new BusinessException(ErrorValidation.INVALID_QUANTITY_TO_DELETE);
+        if(book.getActive())
+            throw new BusinessException(ErrorValidation.INVALID_STATUS_TO_DELETE);
     }
-
 
     @Override
     public Book active(Long id) {
