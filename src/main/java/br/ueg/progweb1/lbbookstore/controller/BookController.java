@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -69,6 +70,17 @@ public class BookController extends CrudController<Book, Long,
     {
 
         var response = mapper.fromModelListToDTOList(service.getByPublisher(publisher));
+        return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping("/search/all-publishers")
+    @Operation(description = "End point to get all publishers")
+    public ResponseEntity<String[]> getPublishers()
+    {
+
+        var response = service.getAllPublishers();
+        LOG.info("Publishers:{}", Arrays.toString(response));
         return ResponseEntity.ok(response);
 
     }

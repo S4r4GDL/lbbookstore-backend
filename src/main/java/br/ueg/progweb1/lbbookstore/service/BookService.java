@@ -11,6 +11,8 @@ public interface BookService extends GenericCrudService<Long, Book>{
 
     List<Book> getByPublisher(String publisher);
 
+    String[] getAllPublishers();
+
     List<Book> getByReleaseYear(Integer year);
 
     List<Book> getByLowerPrice(BigDecimal limitPrice);

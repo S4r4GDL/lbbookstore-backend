@@ -38,6 +38,12 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     }
 
     @Override
+    public String[] getAllPublishers() {
+
+        return repository.getAllPublishers();
+    }
+
+    @Override
     public List<Book> getByReleaseYear(Integer year) {
         var bookList = repository.findAllByReleaseYear(year);
         validateBusinessToList(bookList);
