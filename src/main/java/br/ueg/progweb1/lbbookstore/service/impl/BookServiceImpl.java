@@ -120,7 +120,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     protected void prepareToUpdate(Book newBook, Book bookBD) {
         newBook.setLastUpdate(LocalDate.now());
         newBook.setId(bookBD.getId());
-        newBook.setActive(bookBD.getActive());
+
     }
 
     @Override

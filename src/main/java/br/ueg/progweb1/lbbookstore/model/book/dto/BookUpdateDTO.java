@@ -9,5 +9,6 @@ public record BookUpdateDTO(String title,
                             Integer releaseYear,
                             BigDecimal price,
                             Integer quantity,
-                            String description)
+                            String description,
+                            Boolean active)
 {}
