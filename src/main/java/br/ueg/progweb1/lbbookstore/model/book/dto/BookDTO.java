@@ -6,12 +6,13 @@ import java.time.LocalDate;
 
 public record BookDTO(
         Long id,
-        String title,
+        String name,
         String author,
         String publisher,
         String edition,
         Integer releaseYear,
         BigDecimal price,
+        Integer pages,
         Integer quantity,
         LocalDate lastUpdate,
         Boolean active,

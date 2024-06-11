@@ -1,13 +1,9 @@
 package br.ueg.progweb1.lbbookstore.model.book;
 
-import br.ueg.progweb1.lbbookstore.model.GenericModel;
-import br.ueg.progweb1.lbbookstore.model.Product;
+import br.ueg.progweb1.lbbookstore.model.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,10 +13,6 @@ import java.time.LocalDate;
 @Entity
 public class Book extends Product{
 
-
-        @Column(name="title", length = 250, nullable = false)
-        private String title;
-
         @Column(name="author",  length = 150, nullable = false)
         private String author;
 
@@ -29,6 +21,9 @@ public class Book extends Product{
 
         @Column(name="edition", length = 150, nullable = false)
         private String edition;
+
+        @Column(name="pages")
+        private Integer pages;
 
         @Column(name="release_year", nullable = false)
         private Integer releaseYear;

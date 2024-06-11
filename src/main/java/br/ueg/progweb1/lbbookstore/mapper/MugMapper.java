@@ -5,9 +5,12 @@ import br.ueg.progweb1.lbbookstore.model.mug.dto.MugCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.mug.dto.MugDTO;
 import br.ueg.progweb1.lbbookstore.model.mug.dto.MugUpdateDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MugMapper extends GenericMapper<
         Long,
         Mug,
@@ -15,5 +18,4 @@ public interface MugMapper extends GenericMapper<
         MugCreateDTO,
         MugUpdateDTO>
 {
-    Mug INSTANCE = Mappers.getMapper(Mug.class);
 }

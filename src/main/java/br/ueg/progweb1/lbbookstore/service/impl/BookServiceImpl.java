@@ -2,6 +2,7 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 
 import br.ueg.progweb1.lbbookstore.AppStartupRunner;
 import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
+import br.ueg.progweb1.lbbookstore.enums.ProductType;
 import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.exception.ModelDataException;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
@@ -66,7 +67,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
 
     @Override
     public List<Book> getByTitle(String title) {
-        var bookList = repository.findAllByTitleContainsIgnoreCase(title);
+        var bookList = repository.findAllByNameContainsIgnoreCase(title);
         validateBusinessToList(bookList);
         return bookList;
     }
@@ -82,7 +83,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     @Override
     protected void validateMandatoryFields(Book bookData) {
         LOG.info(String.valueOf(bookData));
-        if ( bookData.getTitle().isEmpty() ||
+        if ( bookData.getName().isEmpty() ||
                 bookData.getAuthor().isEmpty()
                 || bookData.getPublisher().isEmpty()
                 || bookData.getEdition().isEmpty()
@@ -97,6 +98,7 @@ public class BookServiceImpl extends CrudService<Book, Long, BookRepository > im
     protected void prepareToCreate(Book newBook) {
         newBook.setId(0L);
         newBook.setLastUpdate(LocalDate.now());
+        newBook.setType(ProductType.BOOK);
         LOG.info(String.valueOf(newBook));
     }
 

@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @Repository
 public interface MugRepository extends JpaRepository<Mug, Long> {
     Mug findMugByActive(boolean active);
-    Mug findAllByThemeContainingIgnoreCase(String theme);
+    Mug findAllByNameContainingIgnoreCase(String theme);
     Mug findAllByPriceLessThan(BigDecimal price);
 }

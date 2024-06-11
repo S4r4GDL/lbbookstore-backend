@@ -1,8 +1,14 @@
 package br.ueg.progweb1.lbbookstore;
 
+import br.ueg.progweb1.lbbookstore.converter.ProductTypeConverter;
+import br.ueg.progweb1.lbbookstore.enums.ProductType;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
+import br.ueg.progweb1.lbbookstore.model.cart.Cart;
+import br.ueg.progweb1.lbbookstore.model.client.Client;
 import br.ueg.progweb1.lbbookstore.model.mug.Mug;
+import br.ueg.progweb1.lbbookstore.model.user.Login;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
+import br.ueg.progweb1.lbbookstore.repository.ClientRepository;
 import br.ueg.progweb1.lbbookstore.repository.MugRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +36,18 @@ public class AppStartupRunner implements ApplicationRunner {
     @Autowired
     private MugRepository mugRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
 
     public void initializeData(){
         LOG.info("Getting started with initializeData...");
         if(!this.ddlAuto.equalsIgnoreCase(CREATE_DROP)){
             return;
         }
+        LOG.info("...Adding Book data...");
         Book newBook = Book.builder()
-                .title("The Yellow heart")
+                .name("The Yellow heart")
                 .author("Pablo Neruda")
                 .edition("Pocket 2ed")
                 .publisher("MoonPub")
@@ -45,19 +55,23 @@ public class AppStartupRunner implements ApplicationRunner {
                 .price(new BigDecimal("15.00"))
                 .quantity(10)
                 .lastUpdate(LocalDate.now())
+                .pages(300)
+                .type(ProductType.BOOK)
                 .active(true)
                 .description(" Poems collection by pablo neruda ").build();
 
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-            .title("Echoes of Andromeda")
+            .name("Echoes of Andromeda")
             .author("Anya Petrova")
             .edition("1st Edition")
             .publisher("Galactic Press")
             .releaseYear(2015)
             .price(new BigDecimal("18.99"))
             .quantity(0)
+            .pages(100)
+            .type(ProductType.BOOK)
             .lastUpdate(LocalDate.now())
             .active(true)
             .description("A science fiction novel that explores the mysteries of" +
@@ -66,13 +80,15 @@ public class AppStartupRunner implements ApplicationRunner {
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-                .title("1984")
+                .name("1984")
                 .author("George Orwell")
                 .edition("1st Edition")
                 .publisher("Galactic Press")
                 .releaseYear(1949)
                 .price(new BigDecimal("25.99"))
                 .quantity(12)
+                .pages(200)
+                .type(ProductType.BOOK)
                 .lastUpdate(LocalDate.now())
                 .active(true)
                 .description("The story follows Winston Smith," +
@@ -80,25 +96,29 @@ public class AppStartupRunner implements ApplicationRunner {
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-                .title("The Da Vinci code")
+                .name("The Da Vinci code")
                 .author("Daw Brown")
                 .edition("13st Edition")
                 .publisher("Galactic Press")
                 .releaseYear(2003)
                 .price(new BigDecimal("12.99"))
                 .quantity(12)
+                .pages(100)
+                .type(ProductType.BOOK)
                 .lastUpdate(LocalDate.now())
                 .active(true).build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-                .title("Love in the Time of Cholera")
+                .name("Love in the Time of Cholera")
                 .author("Gabriel Garcia Marques")
                 .edition("10st Pocket")
                 .publisher("Star Press")
                 .releaseYear(1972)
                 .price(new BigDecimal("20.99"))
                 .quantity(16)
+                .pages(300)
+                .type(ProductType.BOOK)
                 .lastUpdate(LocalDate.now())
                 .active(true)
                 .description("Follows the enduring love story of Florentino Ariza" +
@@ -107,62 +127,89 @@ public class AppStartupRunner implements ApplicationRunner {
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-                .title("Memories of My Melancholy Whores")
+                .name("Memories of My Melancholy Whores")
                 .author("Gabriel Garcia Marques")
                 .edition("10st ")
                 .publisher("Record Press")
                 .releaseYear(2005)
                 .price(new BigDecimal("70.00"))
                 .quantity(0)
+                .pages(350)
+                .type(ProductType.BOOK)
                 .lastUpdate(LocalDate.now())
                 .active(false).build();
         this.bookRepository.save(newBook);
 
         newBook = Book.builder()
-                .title("The Metamorphosis")
+                .name("The Metamorphosis")
                 .author("Franz Kafka")
                 .edition("1st Edition")
                 .publisher("Principis")
                 .releaseYear(1915)
                 .price(new BigDecimal("14.99"))
                 .quantity(60)
+                .pages(96)
+                .type(ProductType.BOOK)
                 .lastUpdate(LocalDate.now())
                 .active(true)
                 .description("Tells the story of Gregor Samsa, a traveling salesman" +
                         " who wakes up one morning transformed into a giant insect.").build();
         this.bookRepository.save(newBook);
 
-        Mug newMug = Mug.builder().theme("Hollow knight")
+        LOG.info("...Adding Mug data...");
+
+        Mug newMug = Mug.builder().name("Hollow knight")
                         .price(new BigDecimal("47.99"))
                         .quantity(15)
+                        .msl(450)
+                        .type(ProductType.MUG)
                         .lastUpdate(LocalDate.now())
                         .active(true).build();
 
         this.mugRepository.save(newMug);
 
-        newMug = Mug.builder().theme("Lonely hearts")
+        newMug = Mug.builder().name("Lonely hearts")
                 .price(new BigDecimal("39.99"))
                 .quantity(10)
+                .msl(400)
+                .type(ProductType.MUG)
                 .lastUpdate(LocalDate.now())
                 .active(true).build();
 
         this.mugRepository.save(newMug);
 
-        newMug = Mug.builder().theme("Flowers")
+        newMug = Mug.builder().name("Flowers")
                 .price(new BigDecimal("25.00"))
                 .quantity(20)
+                .msl(400)
+                .type(ProductType.MUG)
                 .lastUpdate(LocalDate.now())
                 .active(true).build();
 
         this.mugRepository.save(newMug);
 
-        newMug = Mug.builder().theme("New wave")
+        newMug = Mug.builder().name("New wave")
                 .price(new BigDecimal("50.00"))
                 .quantity(0)
+                .msl(400)
+                .type(ProductType.MUG)
                 .lastUpdate(LocalDate.now())
                 .active(false).build();
 
         this.mugRepository.save(newMug);
+
+        LOG.info("...Adding User data...");
+
+        Client newClient = Client.builder().
+                name("Sara").
+                email("sara7321@gmail.com").
+                cart(new Cart()).
+                dataBirth(LocalDate.now()).
+                lastUpdate(LocalDate.now()).
+                dataCreate(LocalDate.now()).
+                score(3).nationalRegisterNumber(12345678911L).phoneNumber(99366666645L).build();
+        newClient.getCart().setClient(newClient);
+        this.clientRepository.save(newClient);
 
         LOG.info("...End of initializeData");
     }

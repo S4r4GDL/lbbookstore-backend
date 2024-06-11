@@ -4,7 +4,9 @@ import br.ueg.progweb1.lbbookstore.model.GenericModel;
 
 import java.util.List;
 
-public interface GenericMapper<PK, MODEL extends GenericModel<PK>, DTO, CreateDTO, UpdateDTO>{
+public interface GenericMapper<PK,
+        MODEL extends GenericModel<? super PK>, DTO, CreateDTO, UpdateDTO>
+{
 
 
     MODEL fromCreateDTOToModel(CreateDTO dto);
