@@ -4,10 +4,8 @@ import br.ueg.progweb1.lbbookstore.model.user.Login;
 
 import java.time.LocalDate;
 
-public record ClientCreateDTO(String title,
+public record ClientCreateDTO(String name,
                               String email,
                               String password,
-                              Long phoneNumber,
-                              Long nationalRegisterNumber,
                               LocalDate dataBirth) {
 }

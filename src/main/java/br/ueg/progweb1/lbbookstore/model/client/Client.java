@@ -3,6 +3,7 @@ package br.ueg.progweb1.lbbookstore.model.client;
 import br.ueg.progweb1.lbbookstore.model.cart.Cart;
 import br.ueg.progweb1.lbbookstore.model.user.Login;
 import br.ueg.progweb1.lbbookstore.model.user.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,13 +19,6 @@ import java.time.LocalDate;
 @Table(name = "client")
 @Entity
 public class Client extends User {
-
-    @Column(name = "phone_number")
-    protected Long phoneNumber;
-
-    @Column(name = "national_register")
-    protected Long nationalRegisterNumber;
-
     @Column(name = "data_birth")
     protected LocalDate dataBirth;
 
@@ -33,7 +27,9 @@ public class Client extends User {
 
     //TODO: One to one between cart and client
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToOne( cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     protected Cart cart;
 
 }

@@ -40,8 +40,6 @@ public class ClientServiceImpl extends CrudService<Client, Long, ClientRepositor
    newModel.setLastUpdate(LocalDate.now());
    newModel.setCart(new Cart());
    newModel.setLogin(new Login());
-   newModel.getLogin().setUser(newModel);
-   newModel.getCart().setClient(newModel);
  }
 
  @Override

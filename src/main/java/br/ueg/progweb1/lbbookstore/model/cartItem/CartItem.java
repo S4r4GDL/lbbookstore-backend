@@ -3,6 +3,7 @@ package br.ueg.progweb1.lbbookstore.model.cartItem;
 import br.ueg.progweb1.lbbookstore.model.GenericModel;
 import br.ueg.progweb1.lbbookstore.model.product.Product;
 import br.ueg.progweb1.lbbookstore.model.cart.Cart;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,11 +30,18 @@ public class CartItem implements GenericModel<Long> {
     @Column(name="quantity", nullable = false)
     protected Integer quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
-    private Product product;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private  Product product;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="cart_id", referencedColumnName="id", nullable=false)
-    private Cart cart;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart Cart;
+
+
+
+
+
 }

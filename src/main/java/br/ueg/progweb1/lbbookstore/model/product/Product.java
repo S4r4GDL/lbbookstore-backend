@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -44,9 +45,8 @@ public class Product implements GenericModel<Long> {
     protected String description;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="type")
     protected ProductType type;
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="product")
-    private Set<CartItem> cartItem;
+
 
 }

@@ -12,8 +12,6 @@ public interface CartItemMapper extends GenericMapper<
         CartItemDTO,
         CartItemDTO,
         CartItemDTO>{
-
-    @Mapping( source = "productId", target = "product.id")
     CartItem fromCreateDTOToModel(CartItemDTO cartItemDTO);
 
 }

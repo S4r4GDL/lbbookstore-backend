@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -29,15 +30,6 @@ public class Cart implements GenericModel<Long> {
 
     @Transient
     protected Integer totalQuantity;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="cart")
-    private Set<CartItem> cartItem;
-
-    //TODO: One to one between cart and client
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-    private Client client;
-
 
 
 }
