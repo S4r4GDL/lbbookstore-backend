@@ -1,15 +1,17 @@
 package br.ueg.progweb1.lbbookstore;
 
-import br.ueg.progweb1.lbbookstore.converter.ProductTypeConverter;
 import br.ueg.progweb1.lbbookstore.enums.ProductType;
+import br.ueg.progweb1.lbbookstore.enums.UserRole;
 import br.ueg.progweb1.lbbookstore.model.book.Book;
 import br.ueg.progweb1.lbbookstore.model.cart.Cart;
 import br.ueg.progweb1.lbbookstore.model.client.Client;
 import br.ueg.progweb1.lbbookstore.model.mug.Mug;
 import br.ueg.progweb1.lbbookstore.model.user.Login;
+import br.ueg.progweb1.lbbookstore.model.user.User;
 import br.ueg.progweb1.lbbookstore.repository.BookRepository;
 import br.ueg.progweb1.lbbookstore.repository.ClientRepository;
 import br.ueg.progweb1.lbbookstore.repository.MugRepository;
+import br.ueg.progweb1.lbbookstore.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     public void initializeData(){
@@ -200,16 +205,32 @@ public class AppStartupRunner implements ApplicationRunner {
 
         LOG.info("...Adding User data...");
 
+        User newUser = User.builder().
+                name("SaraADM").
+                email("saraadm7321@gmail.com").
+                lastUpdate(LocalDate.now()).
+                role(UserRole.ADMIN).
+                login(new Login()).
+                dataCreate(LocalDate.now()).build();
+        newUser.getLogin().setUser(newUser);
+        newUser.getLogin().setPassword("123456789");
+        this.userRepository.save(newUser);
+
         Client newClient = Client.builder().
                 name("Sara").
                 email("sara7321@gmail.com").
                 cart(new Cart()).
                 dataBirth(LocalDate.now()).
                 lastUpdate(LocalDate.now()).
-                dataCreate(LocalDate.now()).
-                score(3).nationalRegisterNumber(12345678911L).phoneNumber(99366666645L).build();
-        newClient.getCart().setClient(newClient);
+                role(UserRole.USER).
+                login(new Login()).
+                dataCreate(LocalDate.now()).build();
+        newClient.getLogin().setUser(newClient);
+        newClient.getLogin().setPassword("123456789");
         this.clientRepository.save(newClient);
+
+
+
 
         LOG.info("...End of initializeData");
     }
