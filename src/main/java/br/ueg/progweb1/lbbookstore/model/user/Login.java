@@ -1,20 +1,19 @@
 package br.ueg.progweb1.lbbookstore.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@SuperBuilder
-@EqualsAndHashCode(of="id")
+@EqualsAndHashCode(exclude = "user", callSuper = false)
 @Entity
 @Table(name = "login")
 public class Login {
@@ -23,13 +22,15 @@ public class Login {
     @Column(name="user_id")
     protected Long id;
 
+
     @OneToOne
     @MapsId
-    @JoinColumn(name="user_id")
-    protected User user;
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    @ToString.Exclude
+    @JsonBackReference
+    private  User user;
 
-    //TODO: Learn how to encrypt and decrypt a password
-    @Column(name = "password", nullable = false, length = 150)
+    @Column(name="password", length = 250)
     protected String password;
-
 }
