@@ -7,6 +7,7 @@ import br.ueg.progweb1.lbbookstore.model.cart.Cart;
 import br.ueg.progweb1.lbbookstore.model.product.Product;
 import br.ueg.progweb1.lbbookstore.model.cartItem.CartItem;
 import br.ueg.progweb1.lbbookstore.repository.CartItemRepository;
+import br.ueg.progweb1.lbbookstore.repository.CartRepository;
 import br.ueg.progweb1.lbbookstore.repository.ProductRepository;
 import br.ueg.progweb1.lbbookstore.service.CartItemService;
 import org.slf4j.Logger;
@@ -25,6 +26,9 @@ public class CartItemServiceImpl extends CrudService<CartItem, Long, CartItemRep
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     @Override
     public CartItem active(Long id) {
@@ -49,12 +53,17 @@ public class CartItemServiceImpl extends CrudService<CartItem, Long, CartItemRep
     @Override
     protected void prepareToCreate(CartItem newModel) {
         newModel.setId(null);
-        newModel.setCart(new Cart());
         Optional<Product> product = productRepository.findById(newModel.getProduct().getId());
+        Optional<Cart> cart = cartRepository.findById(newModel.getCart().getId());
 
         if(product.isEmpty())
             throw new BusinessException(ErrorValidation.INVALID_ID);
+
+        if(cart.isEmpty())
+            throw new BusinessException(ErrorValidation.INVALID_ID);
+
        newModel.setProduct(product.get());
+       newModel.setCart(cart.get());
     }
 
     @Override
