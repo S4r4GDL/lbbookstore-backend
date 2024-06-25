@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -28,6 +29,9 @@ public class AppStartupRunner implements ApplicationRunner {
     public static final String CREATE_DROP="create-drop";
     private static final Logger LOG =
             LoggerFactory.getLogger(AppStartupRunner.class);
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlAuto;
@@ -207,18 +211,18 @@ public class AppStartupRunner implements ApplicationRunner {
 
         User newUser = User.builder().
                 name("SaraADM").
-                email("saraadm7321@gmail.com").
+                userName("saraadm7321@gmail.com").
                 lastUpdate(LocalDate.now()).
                 role(UserRole.ADMIN).
                 login(new Login()).
                 dataCreate(LocalDate.now()).build();
         newUser.getLogin().setUser(newUser);
-        newUser.getLogin().setPassword("123456789");
+        newUser.getLogin().setPassword(passwordEncoder.encode("123456789"));
         this.userRepository.save(newUser);
 
         Client newClient = Client.builder().
                 name("Sara").
-                email("sara7321@gmail.com").
+                userName("sara7321@gmail.com").
                 cart(new Cart()).
                 dataBirth(LocalDate.now()).
                 lastUpdate(LocalDate.now()).
@@ -226,7 +230,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 login(new Login()).
                 dataCreate(LocalDate.now()).build();
         newClient.getLogin().setUser(newClient);
-        newClient.getLogin().setPassword("123456789");
+        newClient.getLogin().setPassword(passwordEncoder.encode("123456789"));
         this.clientRepository.save(newClient);
 
 

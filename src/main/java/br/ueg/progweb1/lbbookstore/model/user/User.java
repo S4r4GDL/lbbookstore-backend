@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +27,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "_user")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User implements GenericModel<Long>, UserDetails {
+public class User implements GenericModel<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="id")
@@ -35,13 +36,13 @@ public class User implements GenericModel<Long>, UserDetails {
     @Column(name="name", length = 150)
     protected String name;
 
-    @Column(name="email", length = 150)
-    protected String email;
+    @Column(name="user_name", unique = true, length = 150)
+    protected String userName;
 
     @Column(name="data_create", nullable = false)
     protected LocalDate dataCreate;
 
-    @Column(name="last_Updade", nullable = false)
+    @Column(name="last_update", nullable = false)
     protected LocalDate lastUpdate;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -53,44 +54,4 @@ public class User implements GenericModel<Long>, UserDetails {
     @Column(name="role")
     protected UserRole role;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(Objects.equals(this.role.getRoleName(), UserRole.ADMIN.getRoleName()))
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_VIEWER"));
-
-        else if(Objects.equals(this.role.getRoleName(), UserRole.USER.getRoleName()))
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_VIEWER"));
-
-        return List.of( new SimpleGrantedAuthority("ROLE_VIEWER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return this.getLogin().getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

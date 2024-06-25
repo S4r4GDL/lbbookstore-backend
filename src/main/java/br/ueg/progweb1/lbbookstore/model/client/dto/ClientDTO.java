@@ -4,7 +4,8 @@ import br.ueg.progweb1.lbbookstore.model.cart.Cart;
 
 import java.time.LocalDate;
 
-public record ClientDTO(String name,
+public record ClientDTO(Long id,
+                        String name,
                         String email,
                         LocalDate dataBirth,
                         Integer score,

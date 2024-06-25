@@ -5,7 +5,7 @@ import java.util.List;
 public interface GenericCrudService<PK, MODEL> {
     MODEL create(MODEL newModel);
 
-    MODEL update(MODEL book, PK id);
+    MODEL update(MODEL model);
 
     MODEL delete(PK id);
 

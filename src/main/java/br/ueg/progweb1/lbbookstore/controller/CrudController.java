@@ -63,10 +63,10 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
     @PutMapping(path = "/{id}")
     @Operation(description = "End point to update an item")
     @Override
-    public ResponseEntity<DTO> update(@PathVariable("id") PK id, @RequestBody UpdateDTO updateDTO) {
+    public ResponseEntity<DTO> update(@RequestBody UpdateDTO updateDTO) {
 
         LOG.info("Item to update: {}", updateDTO);
-        var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOToModel(updateDTO), id));
+        var response = mapper.fromModelToDTO(service.update(mapper.fromUpdateDTOToModel(updateDTO)));
         LOG.info("Item updated: {}", response);
         return ResponseEntity.ok(response);
 

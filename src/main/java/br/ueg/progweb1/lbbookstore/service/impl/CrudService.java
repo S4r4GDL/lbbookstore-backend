@@ -39,10 +39,10 @@ public abstract class CrudService <
     }
 
     @Override
-    public MODEL update(MODEL newModel, PK id) {
+    public MODEL update(MODEL newModel) {
         validateMandatoryFields(newModel);
         validateBusinessLogicToUpdate(newModel);
-        MODEL modelBD = validateId(id);
+        MODEL modelBD = validateId(newModel.getId());
         prepareToUpdate(newModel, modelBD);
 
         return repository.save(newModel);

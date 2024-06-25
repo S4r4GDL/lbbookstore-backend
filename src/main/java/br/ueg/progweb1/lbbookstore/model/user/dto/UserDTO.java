@@ -13,7 +13,7 @@ import java.util.List;
 public record UserDTO(
         Long id,
         String name,
-        String email,
+        String userName,
         Login login,
         UserRole role,
         LocalDate dataCreate,

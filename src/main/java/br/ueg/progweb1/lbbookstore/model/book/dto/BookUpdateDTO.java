@@ -2,7 +2,8 @@ package br.ueg.progweb1.lbbookstore.model.book.dto;
 
 import java.math.BigDecimal;
 
-public record BookUpdateDTO(String name,
+public record BookUpdateDTO(Long id,
+                            String name,
                             String author,
                             String publisher,
                             String edition,
