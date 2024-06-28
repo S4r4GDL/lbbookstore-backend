@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -40,7 +41,6 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
     @Operation(description = "End point to create a new item")
     @Override
     public ResponseEntity<DTO> create(@RequestBody CreateDTO createDTO){
-
         LOG.info("Item to create: {}", createDTO);
         var response = mapper.fromModelToDTO(service.create(mapper.fromCreateDTOToModel(createDTO)));
         LOG.info("Item created: {}", response);
@@ -71,6 +71,7 @@ public abstract class CrudController < MODEL extends GenericModel<PK>,
         return ResponseEntity.ok(response);
 
     }
+
 
     @DeleteMapping(path = "/{id}")
     @Operation(description = "End point to delete an item")

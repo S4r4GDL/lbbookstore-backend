@@ -25,8 +25,6 @@ public class Client extends User {
     @Column(name = "score")
     protected Integer score;
 
-    //TODO: One to one between cart and client
-
     @JsonManagedReference
     @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")

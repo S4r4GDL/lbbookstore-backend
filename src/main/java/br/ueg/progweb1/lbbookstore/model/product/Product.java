@@ -48,5 +48,7 @@ public class Product implements GenericModel<Long> {
     @Column(name="type")
     protected ProductType type;
 
+    @Column(name="rate", length = 450)
+    protected String rate;
 
 }

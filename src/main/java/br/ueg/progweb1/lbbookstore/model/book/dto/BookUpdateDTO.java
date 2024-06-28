@@ -12,5 +12,6 @@ public record BookUpdateDTO(Long id,
                             Integer pages,
                             Integer quantity,
                             String description,
-                            Boolean active)
+                            Boolean active,
+                            Integer rate)
 {}

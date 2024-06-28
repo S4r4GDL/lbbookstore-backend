@@ -6,6 +6,7 @@ public record UserUpdateDTO(Long id,
                             String name,
                             String userName,
                             String password,
-                            UserRole role) {
+                            UserRole role,
+                            Boolean active) {
 
 }

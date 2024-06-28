@@ -13,10 +13,11 @@ import java.util.List;
 public record UserDTO(
         Long id,
         String name,
-        String userName,
+        String username,
         Login login,
         UserRole role,
         LocalDate dataCreate,
-        LocalDate lastUpdate
+        LocalDate lastUpdate,
+        Boolean active
 ) {
 }

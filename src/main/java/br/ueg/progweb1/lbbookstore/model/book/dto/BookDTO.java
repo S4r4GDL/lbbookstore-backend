@@ -19,6 +19,7 @@ public record BookDTO(
         LocalDate lastUpdate,
         Boolean active,
         String description,
-        ProductType type
+        ProductType type,
+        Integer rate
 )
 {}

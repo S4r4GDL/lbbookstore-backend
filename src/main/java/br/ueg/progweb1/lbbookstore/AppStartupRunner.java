@@ -211,9 +211,10 @@ public class AppStartupRunner implements ApplicationRunner {
 
         User newUser = User.builder().
                 name("SaraADM").
-                userName("saraadm7321@gmail.com").
+                username("saraadm7321@gmail.com").
                 lastUpdate(LocalDate.now()).
                 role(UserRole.ADMIN).
+                active(true).
                 login(new Login()).
                 dataCreate(LocalDate.now()).build();
         newUser.getLogin().setUser(newUser);
@@ -222,12 +223,13 @@ public class AppStartupRunner implements ApplicationRunner {
 
         Client newClient = Client.builder().
                 name("Sara").
-                userName("sara7321@gmail.com").
+                username("sara7321@gmail.com").
                 cart(new Cart()).
                 dataBirth(LocalDate.now()).
                 lastUpdate(LocalDate.now()).
                 role(UserRole.USER).
                 login(new Login()).
+                active(true).
                 dataCreate(LocalDate.now()).build();
         newClient.getLogin().setUser(newClient);
         newClient.getLogin().setPassword(passwordEncoder.encode("123456789"));

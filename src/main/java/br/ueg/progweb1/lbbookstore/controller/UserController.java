@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +30,7 @@ public class UserController extends CrudController<User, Long,
     @PostMapping("/change-access")
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<UserDTO> updateAccess(@RequestBody UserUpdateDTO userUpdateDTO){
-        var response =  this.service.update(mapper.fromUpdateDTOToModel(userUpdateDTO));
+        var response =  this.service.updateAccess(mapper.fromUpdateDTOToModel(userUpdateDTO));
         return ResponseEntity.ok(mapper.fromModelToDTO(response));
 
     }

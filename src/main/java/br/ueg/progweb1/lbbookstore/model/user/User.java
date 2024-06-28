@@ -17,7 +17,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +26,7 @@ import java.util.Set;
 @Entity
 @Table(name = "_user")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class User implements GenericModel<Long> {
+public class User implements GenericModel<Long>, UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="id")
@@ -37,13 +36,16 @@ public class User implements GenericModel<Long> {
     protected String name;
 
     @Column(name="user_name", unique = true, length = 150)
-    protected String userName;
+    protected String username;
 
     @Column(name="data_create", nullable = false)
     protected LocalDate dataCreate;
 
     @Column(name="last_update", nullable = false)
     protected LocalDate lastUpdate;
+
+    @Column(name="active", nullable = false, columnDefinition = "boolean default false")
+    Boolean active;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
@@ -54,4 +56,47 @@ public class User implements GenericModel<Long> {
     @Column(name="role")
     protected UserRole role;
 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(Objects.equals(this.getRole().getName(), UserRole.ADMIN.getName()))
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+
+        else if(Objects.equals(this.getRole().getName(), UserRole.USER.getName()))
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
+        return List.of( new SimpleGrantedAuthority("ROLE_VIEWER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.login.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
+

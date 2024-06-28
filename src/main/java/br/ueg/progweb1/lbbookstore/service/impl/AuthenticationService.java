@@ -3,12 +3,9 @@ package br.ueg.progweb1.lbbookstore.service.impl;
 import br.ueg.progweb1.lbbookstore.model.user.User;
 import br.ueg.progweb1.lbbookstore.model.user.dto.LoginAuthDTO;
 import br.ueg.progweb1.lbbookstore.repository.UserRepository;
-import org.springframework.security.authentication.AuthenticationManager;
+import br.ueg.progweb1.lbbookstore.security.TokenDTO;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,13 +22,13 @@ public class AuthenticationService {
         this.jwtService = jwtService;
     }
 
-    public String authenticate(LoginAuthDTO loginAuthDTO) {
-        var user = userRepository.findByUserName(loginAuthDTO.userName());
+    public TokenDTO authenticate(LoginAuthDTO loginAuthDTO) {
+        var user = userRepository.findByUsername(loginAuthDTO.username());
         if (user.isEmpty() ) {
             throw new BadCredentialsException("User or password is invalid");
         }
 
-        var claims = this.jwtService.generateToken(user.get());
+        TokenDTO claims = new TokenDTO(this.jwtService.generateToken(user.get()));
 
         return claims;
 

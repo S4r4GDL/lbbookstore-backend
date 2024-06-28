@@ -10,5 +10,6 @@ public record MugDTO(Long id,
                      Integer quantity,
                      Integer mls,
                      ProductType type,
-                     Boolean active) {
+                     Boolean active,
+                     Integer rate) {
 }

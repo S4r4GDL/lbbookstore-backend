@@ -1,7 +1,7 @@
 package br.ueg.progweb1.lbbookstore.service.impl;
 
+import br.ueg.progweb1.lbbookstore.enums.UserRole;
 import br.ueg.progweb1.lbbookstore.model.user.User;
-import br.ueg.progweb1.lbbookstore.model.user.dto.LoginAuthDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,18 +29,20 @@ public class JwtServiceImpl {
     {
         Instant now = Instant.now();
         long expiry = 4000L;
-        String scopes = user.getRole().toString();
+
+        var scopes = user.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
 
         var claims = JwtClaimsSet.builder()
                 .issuer(issuer)
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
-                .subject(user.getUserName())
+                .subject(user.getName())
                 .claim("scope", scopes)
                 .build();
 
-        var token =  jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
-        return token;
+        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 }

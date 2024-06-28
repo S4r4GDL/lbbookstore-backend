@@ -12,7 +12,7 @@ public class UserRoleConverter implements AttributeConverter<UserRole, String> {
         if (userRole == null) {
             return null;
         }
-        return userRole.getRoleName();
+        return userRole.getName();
     }
 
     @Override
