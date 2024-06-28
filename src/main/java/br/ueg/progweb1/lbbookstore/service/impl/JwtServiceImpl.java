@@ -39,7 +39,7 @@ public class JwtServiceImpl {
                 .issuer(issuer)
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
-                .subject(user.getName())
+                .subject(user.getUsername())
                 .claim("scope", scopes)
                 .build();
 

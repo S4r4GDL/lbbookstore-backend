@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,6 +26,9 @@ public class AuthenticationService {
     public TokenDTO authenticate(LoginAuthDTO loginAuthDTO) {
         var user = userRepository.findByUsername(loginAuthDTO.username());
         if (user.isEmpty() ) {
+            throw new BadCredentialsException("User is invalid");
+        }
+         if(!validatePassword(loginAuthDTO,  user)){
             throw new BadCredentialsException("User or password is invalid");
         }
 
@@ -34,14 +38,11 @@ public class AuthenticationService {
 
     }
 
-    private boolean validatePassword(LoginAuthDTO loginAuthDTO, Optional<User> user) {
-        var raw = passwordEncoder.encode(loginAuthDTO.password());
-        if(user.isPresent()){
-
-            User mUser = user.get();
-            return true;
+    private boolean validatePassword(LoginAuthDTO loginAuthDTO, Optional<User> userOptional) {
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return passwordEncoder.matches(loginAuthDTO.password(), user.getPassword());
         }
-
         return false;
     }
 
