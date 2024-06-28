@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public record ClientDTO(Long id,
                         String name,
-                        String userName,
+                        String username,
                         LocalDate dataBirth,
                         Integer score,
                         Cart cart) {

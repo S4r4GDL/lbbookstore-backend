@@ -1,10 +1,13 @@
 package br.ueg.progweb1.lbbookstore.service.impl;
 
+import br.ueg.progweb1.lbbookstore.enums.ErrorValidation;
 import br.ueg.progweb1.lbbookstore.enums.UserRole;
+import br.ueg.progweb1.lbbookstore.exception.BusinessException;
 import br.ueg.progweb1.lbbookstore.model.cart.Cart;
 import br.ueg.progweb1.lbbookstore.model.client.Client;
 import br.ueg.progweb1.lbbookstore.model.user.Login;
 import br.ueg.progweb1.lbbookstore.repository.ClientRepository;
+import br.ueg.progweb1.lbbookstore.repository.UserRepository;
 import br.ueg.progweb1.lbbookstore.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +22,9 @@ public class ClientServiceImpl extends CrudService<Client, Long, ClientRepositor
 
  @Autowired
  private BCryptPasswordEncoder passwordEncoder;
+
+ @Autowired
+ private UserRepository userRepository;
 
  @Override
  public Client active(Long id) {
@@ -42,7 +48,7 @@ public class ClientServiceImpl extends CrudService<Client, Long, ClientRepositor
 
  @Override
  protected void prepareToCreate(Client newModel) {
-   newModel.setId(null);
+   newModel.setId(0L);
    newModel.setDataCreate(LocalDate.now());
    newModel.setLastUpdate(LocalDate.now());
    newModel.setCart(new Cart());
@@ -59,7 +65,9 @@ public class ClientServiceImpl extends CrudService<Client, Long, ClientRepositor
 
  @Override
  protected void validateBusinessLogicToCreate(Client newModel) {
-
+    if(userRepository.findByUsername(newModel.getUsername()).isPresent()){
+        throw new BusinessException(ErrorValidation.USER_ALREADY_EXISTS);
+    }
  }
 
  @Override

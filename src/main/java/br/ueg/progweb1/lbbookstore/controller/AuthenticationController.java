@@ -55,9 +55,9 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<TokenDTO> create(@RequestBody ClientCreateDTO clientCreateDTO){
-        var response =  clientService.create(clientmapper.fromCreateDTOToModel(clientCreateDTO));
+        var response = clientService.create(clientmapper.fromCreateDTOToModel(clientCreateDTO));
         LOG.info("AUTH:{}", response);
-        var auth = authService.authenticate(new LoginAuthDTO(response.getUsername(), response.getLogin().getPassword()));
+        var auth = authService.authenticate(new LoginAuthDTO(response.getUsername(), clientCreateDTO.password()));
         LOG.info("AUTH:{}", auth);
         return ResponseEntity.ok(auth);
 

@@ -29,7 +29,6 @@ import java.security.interfaces.RSAPublicKey;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
     @Value("${jwt.private.key}")
@@ -44,9 +43,12 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/books").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/mugs").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/books").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/books").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/books").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/mugs").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/mugs").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/mugs").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "auth/login").permitAll()
                         .anyRequest().permitAll()

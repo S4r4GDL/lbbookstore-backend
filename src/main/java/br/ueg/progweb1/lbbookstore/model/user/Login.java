@@ -31,6 +31,6 @@ public class Login {
     @JsonBackReference
     private  User user;
 
-    @Column(name="password", length = 250)
+    @Column(name="password")
     protected String password;
 }

@@ -4,6 +4,8 @@ import br.ueg.progweb1.lbbookstore.model.client.Client;
 import br.ueg.progweb1.lbbookstore.model.client.dto.ClientCreateDTO;
 import br.ueg.progweb1.lbbookstore.model.client.dto.ClientDTO;
 import br.ueg.progweb1.lbbookstore.model.client.dto.ClientUpdateDTO;
+import br.ueg.progweb1.lbbookstore.model.user.User;
+import br.ueg.progweb1.lbbookstore.model.user.dto.UserCreateDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
@@ -17,4 +19,6 @@ public interface ClientMapper extends GenericMapper<Long, Client, ClientDTO, Cli
     @Override
     @Mapping(source = "password", target = "login.password")
     Client fromCreateDTOToModel(ClientCreateDTO dto);
+
+
 }
